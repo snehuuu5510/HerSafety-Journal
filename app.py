@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Allows your frontend to communicate with this API
+CORS(app, origins=["hersafetyjournal-frontend.vercel.app"])  # Allows your frontend to communicate with this API
 
 DB_FILE = 'database.db'
 
@@ -64,4 +64,5 @@ def get_comments():
 
 if __name__ == '__main__':
     init_db()  # Ensure table exists before starting
+
     app.run(debug=True, port=5000)
