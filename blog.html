@@ -662,4 +662,320 @@
         loadContent('minor');
     </script>
 </body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Awareness | HerSafety Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --deep-wine: #1A0505;
+            --secondary-surface: #2D0A0A;
+            --accent-burgundy: #800020;
+            --accent-pink: #FF5E6C;
+            --text-light: #FFF5F5;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        body {
+            background-color: var(--deep-wine);
+            color: var(--text-light);
+            line-height: 1.8;
+            background: radial-gradient(circle at 50% 50%, #2d0a0a 0%, #1a0505 100%);
+            min-height: 100vh;
+        }
+
+        /* Language Switcher */
+        .header-tools {
+            position: fixed;
+            top: 20px; right: 5%;
+            z-index: 1001;
+            display: flex; gap: 10px;
+            background: rgba(45, 10, 10, 0.8);
+            padding: 8px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 94, 108, 0.3);
+        }
+
+        .lang-btn {
+            background: transparent; border: none;
+            color: white; cursor: pointer; padding: 5px 12px;
+            border-radius: 20px; transition: var(--transition);
+            font-weight: 600; font-size: 0.9rem;
+        }
+
+        .lang-btn.active { background: var(--accent-pink); color: var(--deep-wine); }
+
+        /* Header */
+        .blog-header { padding: 100px 5% 40px; text-align: center; }
+        .blog-header h1 { font-size: 3rem; color: var(--accent-pink); margin-bottom: 10px; letter-spacing: 2px; }
+        .blog-header p { opacity: 0.8; font-size: 1.1rem; }
+
+        /* Tabs Navigation */
+        .tabs-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 10%;
+            margin-bottom: 50px;
+        }
+
+        .tab-card {
+            background: var(--secondary-surface);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 94, 108, 0.1);
+            transition: var(--transition);
+        }
+
+        .tab-card i { font-size: 2.5rem; color: var(--accent-pink); margin-bottom: 15px; }
+        .tab-card.active { 
+            background: var(--accent-burgundy); 
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 20px rgba(255, 94, 108, 0.2);
+        }
+        .tab-card:hover { transform: translateY(-5px); border-color: var(--accent-pink); }
+
+        /* Content Area */
+        .content-display {
+            max-width: 1000px;
+            margin: 0 auto 100px;
+            padding: 50px;
+            background: rgba(45, 10, 10, 0.5);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 94, 108, 0.05);
+            animation: fadeIn 0.6s ease;
+        }
+
+        .article-section { margin-bottom: 40px; }
+        .article-section h2 { color: var(--accent-pink); font-size: 2rem; margin-bottom: 20px; border-left: 5px solid var(--accent-pink); padding-left: 15px; }
+        .article-section h3 { color: var(--accent-pink); margin: 25px 0 15px; font-size: 1.4rem; }
+        .article-section p { margin-bottom: 15px; opacity: 0.9; }
+        .article-section ul { padding-left: 20px; margin-bottom: 15px; }
+        .article-section li { margin-bottom: 10px; opacity: 0.9; }
+
+        /* Stats Table */
+        .data-table {
+            width: 100%; border-collapse: collapse; margin: 20px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .data-table th, .data-table td { padding: 12px; border: 1px solid rgba(255, 94, 108, 0.2); text-align: left; }
+        .data-table th { background: var(--accent-burgundy); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .tabs-nav { padding: 0 5%; }
+            .content-display { padding: 25px; margin: 0 5% 50px; }
+            .blog-header h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-tools">
+        <button class="lang-btn active" onclick="setLang('en')">English</button>
+        <button class="lang-btn" onclick="setLang('hi')">हिंदी</button>
+        <button class="lang-btn" onclick="setLang('mr')">मराठी</button>
+    </div>
+
+    <header class="blog-header">
+        <h1 id="main-title">Blog & Awareness</h1>
+        <p id="main-subtitle">Detailed research and analysis on social safety and protection.</p>
+    </header>
+
+    <div class="tabs-nav">
+        <div class="tab-card active" onclick="loadContent('minor')" id="tab-minor">
+            <i class="fas fa-child"></i>
+            <h3 id="t-minor">Minor (Under 18)</h3>
+            <p id="s-minor">Vulnerability & Protection</p>
+        </div>
+        <div class="tab-card" onclick="loadContent('adult')" id="tab-adult">
+            <i class="fas fa-female"></i>
+            <h3 id="t-adult">Adult Women</h3>
+            <p id="s-adult">Social Barriers & Reality</p>
+        </div>
+        <div class="tab-card" onclick="loadContent('senior')" id="tab-senior">
+            <i class="fas fa-user-shield"></i>
+            <h3 id="t-senior">Women (35+ Age)</h3>
+            <p id="s-senior">The Silent Dimension</p>
+        </div>
+    </div>
+
+    <div class="content-display" id="content-area">
+        </div>
+
+    <script>
+        let currentLang = 'en';
+        let currentCategory = 'minor';
+
+        const dataContent = {
+            en: {
+                minor: {
+                    title: "👧 Minor (Under 18) – Vulnerability & Protection",
+                    p1: "Children represent one of the most vulnerable segments of society. Crimes against minor girls are not only legal violations but profound breaches of trust, safety, and childhood itself. Abuse in this age group often involves individuals from the victim’s familiar surroundings — relatives, neighbors, caregivers, or acquaintances.",
+                    p2: "Despite the presence of strict laws such as the Protection of Children from Sexual Offences (POCSO) Act, underreporting remains a serious concern. Fear, social pressure, family reputation, and psychological trauma frequently prevent timely complaints.",
+                    p3: "Beyond physical harm, abuse during childhood can result in long-term psychological consequences, including anxiety, trust issues, emotional distress, and lasting trauma. These cases demand not only legal intervention but survivor-centered care, rehabilitation, and societal responsibility.",
+                    p4: "Protecting minors requires stronger awareness, safe reporting mechanisms, institutional sensitivity, and collective vigilance."
+                },
+                adult: {
+                    title: "👩 Adult Women – Complex Realities & Social Barriers",
+                    p1: "Crimes against adult women often exist within a complex intersection of social, cultural, and economic factors. Data consistently shows that a large percentage of offenders are known to the survivor, indicating that violence frequently emerges from trusted or familiar environments.",
+                    p2: "Adult women face diverse forms of abuse: Sexual violence, Domestic violence, Workplace harassment, Psychological and emotional abuse, and Economic control.",
+                    p3: "One of the major challenges in this category is delayed justice. Lengthy legal processes, evidentiary burdens, social stigma, and victim-blaming attitudes often discourage survivors from pursuing legal remedies. Additionally, many incidents never reach formal records due to fear of retaliation, financial dependency, or family pressure.",
+                    p4: "Addressing abuse in adulthood requires not only legal enforcement but also structural reforms, gender-sensitive policing, social support systems, and cultural change."
+                },
+                senior: {
+                    title: "👩‍🦳 Women (35+ Age Group) – The Silent Dimension of Abuse",
+                    p1: "Abuse against women aged 35 and above often remains less discussed yet deeply significant. This demographic frequently experiences violence within domestic, marital, and familial contexts.",
+                    p2: "Forms of abuse may include: Domestic violence, Marital cruelty, Emotional manipulation, Economic restriction, Psychological abuse, and Sexual violence. Women in this age group often face unique barriers: Social conditioning, Family responsibilities, Financial dependence, and Fear of social isolation.",
+                    p3: "Because many incidents occur within marriage or family structures, survivors may hesitate to report abuse, leading to significant underrepresentation in official statistics. Violence in this stage of life can carry profound emotional and psychological consequences, especially when endured over extended periods.",
+                    p4: "Recognizing this silent dimension is essential for building inclusive awareness, survivor support systems, and equitable access to justice."
+                },
+                shared: {
+                    overviewTitle: "📊 National Overview — India (NCRB 2023)",
+                    stats: "<ul><li>In 2023, India recorded 4,48,211 crimes against women.</li><li>Domestic cruelty (Sec 498A) was the largest portion (1,33,676 cases).</li><li>Charge-sheeting rate: 77.6%</li><li>Over 89% of attackers are known to the victim.</li></ul>",
+                    statesTitle: "📍 State-wise Data (2023)",
+                    casesTitle: "⚖️ Major Cases That Shook India",
+                    cases: "<ul><li><strong>Nirbhaya Case (2012):</strong> Led to major criminal law amendments.</li><li><strong>Kathua Case (2018):</strong> Raised concerns about child safety.</li><li><strong>Unnao & Hathras Cases:</strong> Highlighted systemic gaps and investigation issues.</li></ul>"
+                }
+            },
+            hi: {
+                minor: {
+                    title: "👧 नाबालिग (18 से कम) – संवेदनशीलता और सुरक्षा",
+                    p1: "बच्चे समाज के सबसे संवेदनशील वर्गों में से एक हैं। नाबालिग लड़कियों के खिलाफ अपराध न केवल कानूनी उल्लंघन हैं, बल्कि विश्वास, सुरक्षा और बचपन का गंभीर उल्लंघन हैं। इस आयु वर्ग में दुर्व्यवहार में अक्सर पीड़ित के परिचित परिवेश के लोग शामिल होते हैं - रिश्तेदार, पड़ोसी या देखभाल करने वाले।",
+                    p2: "POCSO अधिनियम जैसे कड़े कानूनों के बावजूद, रिपोर्टिंग की कमी एक गंभीर चिंता बनी हुई है। डर, सामाजिक दबाव और पारिवारिक प्रतिष्ठा अक्सर शिकायतों को रोकते हैं।",
+                    p3: "शारीरिक नुकसान के अलावा, बचपन का दुर्व्यवहार दीर्घकालिक मनोवैज्ञानिक परिणाम जैसे चिंता और भावनात्मक संकट पैदा कर सकता है।",
+                    p4: "नाबालिगों की सुरक्षा के लिए मजबूत जागरूकता और सुरक्षित रिपोर्टिंग तंत्र की आवश्यकता है।"
+                },
+                adult: {
+                    title: "👩 वयस्क महिलाएं – जटिल वास्तविकताएं और सामाजिक बाधाएं",
+                    p1: "वयस्क महिलाओं के खिलाफ अपराध अक्सर सामाजिक, सांस्कृतिक और आर्थिक कारकों के बीच होते हैं। डेटा दिखाता है कि अपराधियों का एक बड़ा प्रतिशत पीड़ित का परिचित होता है।",
+                    p2: "वयस्क महिलाएं विभिन्न रूपों में दुर्व्यवहार का सामना करती हैं: यौन हिंसा, घरेलू हिंसा, कार्यस्थल पर उत्पीड़न और आर्थिक नियंत्रण।",
+                    p3: "न्याय में देरी एक बड़ी चुनौती है। लंबी कानूनी प्रक्रियाएं और सामाजिक कलंक अक्सर पीड़ितों को कानूनी उपचार से हतोत्साहित करते हैं।",
+                    p4: "वयस्कता में दुर्व्यवहार को रोकने के लिए संरचनात्मक सुधार और सामाजिक सहायता प्रणाली की आवश्यकता है।"
+                },
+                senior: {
+                    title: "👩‍🦳 महिलाएं (35+ आयु वर्ग) – दुर्व्यवहार का मौन आयाम",
+                    p1: "35 वर्ष और उससे अधिक उम्र की महिलाओं के खिलाफ दुर्व्यवहार अक्सर कम चर्चित रहता है। यह समूह अक्सर घरेलू और वैवाहिक संदर्भों में हिंसा का अनुभव करता है।",
+                    p2: "दुर्व्यवहार के रूपों में शामिल हैं: घरेलू हिंसा, वैवाहिक क्रूरता, भावनात्मक हेरफेर और आर्थिक प्रतिबंध।",
+                    p3: "चूंकि कई घटनाएं विवाह के भीतर होती हैं, इसलिए पीड़ित रिपोर्ट करने में संकोच करते हैं, जिससे आधिकारिक आंकड़ों में उनकी संख्या कम रहती है।",
+                    p4: "इस मौन आयाम को पहचानना समावेशी जागरूकता और न्याय के लिए आवश्यक है।"
+                },
+                shared: {
+                    overviewTitle: "📊 राष्ट्रीय अवलोकन — भारत (NCRB 2023)",
+                    stats: "<ul><li>2023 में भारत में महिलाओं के खिलाफ 4,48,211 अपराध दर्ज किए गए।</li><li>घरेलू क्रूरता (धारा 498A) के सबसे अधिक 1,33,676 मामले थे।</li><li>दोषसिद्धि दर: लगभग 27%</li><li>89% हमलावर पीड़ित के परिचित होते हैं।</li></ul>",
+                    statesTitle: "📍 राज्य-वार डेटा (2023)",
+                    casesTitle: "⚖️ प्रमुख मामले जिन्होंने भारत को हिला दिया",
+                    cases: "<ul><li><strong>निर्भया मामला (2012):</strong> इसके बाद कानून में कड़े बदलाव हुए।</li><li><strong>कठुआ मामला (2018):</strong> बाल सुरक्षा को लेकर चिंताएं बढ़ीं।</li><li><strong>उन्नाव और हाथरस:</strong> सिस्टम की कमियों और जांच के मुद्दों को उजागर किया।</li></ul>"
+                }
+            },
+            mr: {
+                minor: {
+                    title: "👧 अल्पवयीन (18 वर्षांखालील) – असुरक्षितता आणि संरक्षण",
+                    p1: "मुले हा समाजातील सर्वात असुरक्षित घटक आहे. अल्पवयीन मुलींवरील गुन्हे हे केवळ कायदेशीर उल्लंघन नसून विश्वास आणि सुरक्षिततेचा भंग आहे. यात अनेकदा परिचित व्यक्तींचा समावेश असतो.",
+                    p2: "POCSO सारख्या कडक कायद्यांनंतरही, भीती आणि सामाजिक दबावामुळे अनेक प्रकरणे नोंदवली जात नाहीत.",
+                    p3: "बचपणातील शोषणामुळे दीर्घकालीन मानसिक परिणाम आणि चिंता निर्माण होऊ शकते.",
+                    p4: "अल्पवयीन मुलांच्या संरक्षणासाठी सामाजिक जागरूकता आणि सुरक्षित तक्रार निवारण यंत्रणेची गरज आहे."
+                },
+                adult: {
+                    title: "👩 प्रौढ महिला – गुंतागुंतीची वास्तविकता आणि सामाजिक अडथळे",
+                    p1: "प्रौढ महिलांवरील गुन्हे अनेकदा सामाजिक आणि आर्थिक घटकांशी निगडित असतात. बहुतांश घटनांमध्ये गुन्हेगार हे ओळखीचेच असतात.",
+                    p2: "प्रौढ महिलांना लैंगिक हिंसाचार, घरगुती हिंसाचार आणि कामाच्या ठिकाणी होणारा छळ अशा विविध समस्यांना सामोरे जावे लागते.",
+                    p3: "न्यायासाठी होणारा विलंब आणि सामाजिक कलंक ही मोठी आव्हाने आहेत.",
+                    p4: "प्रौढवयातील शोषण रोखण्यासाठी कायदेशीर अंमलबजावणीसोबतच सामाजिक मानसिकतेत बदल होणे आवश्यक आहे."
+                },
+                senior: {
+                    title: "👩‍🦳 महिला (35+ वयोगट) – शोषणाचे मौन पैलू",
+                    p1: "35 वर्षांवरील महिलांवरील शोषणाबद्दल फारशी चर्चा होत नाही. हा वयोगट अनेकदा कौटुंबिक आणि वैवाहिक हिंसाचाराचा बळी ठरतो.",
+                    p2: "यात घरगुती हिंसाचार, वैवाहिक छळ आणि भावनिक शोषणाचा समावेश होतो.",
+                    p3: "कौटुंबिक जबाबदाऱ्या आणि सामाजिक बहिष्काराच्या भीतीमुळे अनेक महिला तक्रार करण्यास धजावत नाहीत.",
+                    p4: "या मौन पैलूला ओळखून त्यांना न्याय मिळवून देणे गरजेचे आहे."
+                },
+                shared: {
+                    overviewTitle: "📊 राष्ट्रीय विहंगावलोकन — भारत (NCRB 2023)",
+                    stats: "<ul><li>2023 मध्ये भारतात महिलांविरुद्ध 4,48,211 गुन्हे नोंदवले गेले.</li><li>कौटुंबिक छळ (कलम 498A) ही सर्वात मोठी श्रेणी होती (1,33,676 गुन्हे).</li><li>शिक्षा होण्याचे प्रमाण: सुमारे 27%</li><li>89% गुन्हेगार हे ओळखीचे असतात.</li></ul>",
+                    statesTitle: "📍 राज्यनिहाय डेटा (2023)",
+                    casesTitle: "⚖️ भारताला हादरवून सोडणारे प्रमुख खटले",
+                    cases: "<ul><li><strong>निर्भया खटला (2012):</strong> यामुळे कायद्यात मोठे बदल झाले.</li><li><strong>कठुआ खटला (2018):</strong> बालसुरक्षेबद्दल चिंता वाढली.</li><li><strong>उन्नाव आणि हाथरस:</strong> यंत्रणेतील त्रुटी समोर आल्या.</li></ul>"
+                }
+            }
+        };
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update UI Labels
+            const labels = {
+                en: ["Blog & Awareness", "Data analysis on protection", "Minor (Under 18)", "Adult Women", "Women (35+ Age)"],
+                hi: ["ब्लॉग और जागरूकता", "सुरक्षा पर डेटा विश्लेषण", "नाबालिग (18 से कम)", "वयस्क महिलाएं", "महिलाएं (35+ आयु)"],
+                mr: ["ब्लॉग आणि जागरूकता", "सुरक्षेवर डेटा विश्लेषण", "अल्पवयीन (18 वर्षांखालील)", "प्रौढ महिला", "महिला (35+ वयोगट)"]
+            };
+            
+            document.getElementById('main-title').innerText = labels[lang][0];
+            document.getElementById('main-subtitle').innerText = labels[lang][1];
+            document.getElementById('t-minor').innerText = labels[lang][2];
+            document.getElementById('t-adult').innerText = labels[lang][3];
+            document.getElementById('t-senior').innerText = labels[lang][4];
+            
+            loadContent(currentCategory);
+        }
+
+        function loadContent(category) {
+            currentCategory = category;
+            document.querySelectorAll('.tab-card').forEach(card => card.classList.remove('active'));
+            document.getElementById('tab-' + category).classList.add('active');
+
+            const content = dataContent[currentLang][category];
+            const shared = dataContent[currentLang].shared;
+            const area = document.getElementById('content-area');
+
+            area.innerHTML = `
+                <div class="article-section">
+                    <h2>${content.title}</h2>
+                    <p>${content.p1}</p>
+                    <p>${content.p2}</p>
+                    <p>${content.p3}</p>
+                    <p>${content.p4}</p>
+                </div>
+
+                <div class="article-section">
+                    <h3>${shared.overviewTitle}</h3>
+                    ${shared.stats}
+                </div>
+
+                <div class="article-section">
+                    <h3>${shared.statesTitle}</h3>
+                    <table class="data-table">
+                        <tr><th>State</th><th>Total Crimes (2023)</th></tr>
+                        <tr><td>Uttar Pradesh</td><td>66,381</td></tr>
+                        <tr><td>Maharashtra</td><td>47,101</td></tr>
+                        <tr><td>Rajasthan</td><td>45,450</td></tr>
+                        <tr><td>West Bengal</td><td>34,691</td></tr>
+                    </table>
+                </div>
+
+                <div class="article-section">
+                    <h3>${shared.casesTitle}</h3>
+                    ${shared.cases}
+                </div>
+            `;
+        }
+
+        // Initialize
+        loadContent('minor');
+    </script>
+</body>
 </html>
