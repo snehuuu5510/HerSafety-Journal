@@ -3,8 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins=["hersafetyjournal-frontend.vercel.app"])  # Allows your frontend to communicate with this API
-
+CORS(app, origins=["https://hersafety-journal-1.onrender.com"])  # Already correct ✅
 DB_FILE = 'database.db'
 
 def init_db():
@@ -66,3 +65,4 @@ if __name__ == '__main__':
     init_db()  # Ensure table exists before starting
 
     app.run(debug=True, port=5000)
+
