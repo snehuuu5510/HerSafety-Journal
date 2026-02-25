@@ -335,7 +335,7 @@
     }
 
     try {
-        const response = await fetch('http://127.0.0.1:5000/comment', {
+        const response = await fetch("https://hersafety-journal-1.onrender.com/comment", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, comment })
@@ -353,7 +353,7 @@
 }
        async function loadComments() {
     try {
-        const response = await fetch('http://127.0.0.1:5000/comment');
+        const response = await fetch("https://hersafety-journal-1.onrender.com/comment");
         const comments = await response.json();
         
         const list = document.getElementById('comment-list');
@@ -380,4 +380,5 @@ window.onload = loadComments;
         updateContent('en');
     </script>
 </body>
+
 </html>
