@@ -241,7 +241,7 @@
             var n = document.getElementById("c-name").value;
             var t = document.getElementById("c-text").value;
             if (!n || !t) { alert("Please fill both fields"); return; }
-            fetch("http://127.0.0.1:5000/comment", {
+            fetch("https://hersafety-journal-1.onrender.com/comment", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name: n, comment: t })
@@ -255,7 +255,7 @@
         }
 
         function loadCmt() {
-            fetch("http://127.0.0.1:5000/comment")
+            fetch("https://hersafety-journal-1.onrender.com/comment")
                 .then(function(r) { return r.json(); })
                 .then(function(items) {
                     var list = document.getElementById("c-list");
@@ -276,3 +276,4 @@
     </script>
 </body>
 </html>
+
