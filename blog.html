@@ -7,219 +7,318 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --deep-wine: #1A0505;
-            --secondary-surface: #2D0A0A;
-            --accent-burgundy: #800020;
+            --deep-wine: #8c3d3d;
+            --secondary-surface: #de7a7a;
             --accent-pink: #FF5E6C;
             --text-light: #FFF5F5;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: radial-gradient(circle at 50% 50%, #2d0a0a 0%, #1a0505 100%);
-            min-height: 100vh;
-            color: var(--text-light); 
-            font-family: 'Segoe UI', sans-serif; 
-            line-height: 1.6; 
+
+        body {
+            background-color: var(--accent-pink);
+            color: var(--text-light);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            line-height: 1.6;
         }
-        .lang-nav { 
-            position: sticky; top: 0; 
-            background: rgba(45, 10, 10, 0.95); 
-            padding: 15px; display: flex; justify-content: center; gap: 15px; 
-            border-bottom: 2px solid var(--accent-pink); z-index: 1000; 
-            backdrop-filter: blur(10px);
+
+        .lang-nav {
+            position: sticky;
+            top: 0;
+            background: var(--secondary-surface);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            border-bottom: 2px solid var(--accent-pink);
+            z-index: 1000;
         }
-        .lang-btn { background: transparent; border: 1px solid var(--accent-pink); color: white; padding: 8px 18px; cursor: pointer; border-radius: 20px; font-weight: bold; transition: 0.3s; }
-        .lang-btn.active { background: var(--accent-pink); color: var(--deep-wine); }
-        .container { max-width: 900px; margin: 40px auto; padding: 35px; background: rgba(45, 10, 10, 0.5); border-radius: 20px; border: 1px solid rgba(255, 94, 108, 0.1); backdrop-filter: blur(10px); }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--accent-pink);
+            color: white;
+            padding: 8px 18px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--accent-pink);
+            color: var(--deep-wine);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 25px;
+            background: rgba(45, 10, 10, 0.6);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 94, 108, 0.1);
+        }
+
         h1, h2, h3 { color: var(--accent-pink); margin-top: 1.5em; }
-        .data-card { background: rgba(128, 0, 32, 0.2); padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid var(--accent-pink); }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { border: 1px solid rgba(255,94,108,0.2); padding: 12px; text-align: left; }
-        th { background: var(--accent-burgundy); color: white; }
+        .data-card {
+            background: var(--secondary-surface);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid var(--accent-pink);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #444;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th { background: var(--accent-pink); color: var(--deep-wine); }
+
         ul { padding-left: 20px; }
-        li { margin-bottom: 10px; opacity: 0.9; }
+        li { margin-bottom: 10px; }
+        
         .intro-title { font-size: 2.2rem; text-align: center; margin-bottom: 10px; }
         .divider { height: 1px; background: rgba(255, 94, 108, 0.3); margin: 30px 0; }
-
-        .comment-area { background: rgba(45, 10, 10, 0.5); padding: 40px; border-radius: 20px; margin: 40px auto; max-width: 900px; border: 1px solid rgba(255,94,108,0.1); }
-        .comment-form input, .comment-form textarea { width: 100%; background: var(--secondary-surface); border: 1px solid rgba(255,94,108,0.3); color: white; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
-        .comment-submit-btn { background: var(--accent-pink); color: var(--deep-wine); border: none; padding: 12px 30px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 1rem; }
-        .comment-list { margin-top: 30px; }
-        .comment-item { background: rgba(128,0,32,0.15); padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #FF5E6C; }
     </style>
 </head>
 <body>
-
+    
     <div class="lang-nav">
         <button class="lang-btn active" onclick="updateLang('en')">English</button>
         <button class="lang-btn" onclick="updateLang('hi')">हिंदी</button>
         <button class="lang-btn" onclick="updateLang('mr')">मराठी</button>
     </div>
 
-    <div class="container" id="content"></div>
-
-    <div class="comment-area">
-        <h2 style="color:#FF5E6C; margin-bottom:20px;">💬 Comments</h2>
-        <div class="comment-form">
-            <input type="text" id="c-name" placeholder="Your Name" />
-            <textarea id="c-text" rows="4" placeholder="Your Thought"></textarea>
-            <button class="comment-submit-btn" onclick="submitCmt()">Submit</button>
+    <div class="container" id="content">
         </div>
-        <div id="c-list" class="comment-list"></div>
-    </div>
-
+  
     <script>
         const translations = {
             en: {
                 mainTitle: "Understanding Crimes Against Women in India: Data, Reality, and Justice",
                 intro: "Introduction",
-                introP: "Crimes against women remain one of the most serious social and legal challenges in India. Despite stricter laws, increased awareness, and growing reporting mechanisms, violence against women continues to impact individuals across age groups.",
+                introP: "Crimes against women remain one of the most serious social and legal challenges in India. Despite stricter laws, increased awareness, and growing reporting mechanisms, violence against women continues to impact individuals across age groups — from minors to elderly women. Analyzing crime data helps us understand patterns, systemic gaps, and the urgency for stronger implementation of justice.",
                 natOverview: "📊 National Overview — Crimes Against Women (India)",
-                natP1: "👉 In 2023, India recorded 4,48,211 crimes against women.",
-                natList: ["Domestic cruelty (Section 498A): 1,33,676 cases","Kidnapping & abduction: 88,605 cases","Sexual assault (excluding rape): 83,891 cases","Rape cases: 29,670 cases (2023)"],
-                chargeSheet: "✔ Charge-sheeting rate: ~77.6%",
+                natP1: "👉 In 2023, India recorded 4,48,211 crimes against women. This includes rape, domestic violence, kidnapping, etc. — showing a slight increase from the previous years.",
+                natList: [
+                    "Domestic cruelty (Section 498A) was the largest portion with 133,676 cases.",
+                    "Kidnapping & abduction: 88,605 cases",
+                    "Sexual assault (excluding rape): 83,891 cases",
+                    "Rape cases: 29,670 cases reported nationally in 2023."
+                ],
+                chargeSheet: "✔ Charge-sheeting rate overall was around 77.6% — meaning in about 3 out of 4 cases, police filed formal charges.",
                 stateData: "📍 State-wise Crime Data (2023)",
-                stateP1: "According to NCRB 2023:",
+                stateP1: "According to the NCRB 2023 data:",
                 topStates: "Top states by total crimes against women:",
-                stateList: ["Uttar Pradesh – 66,381","Maharashtra – 47,101","Rajasthan – 45,450","West Bengal – 34,691","Madhya Pradesh – 32,342"],
+                stateList: ["Uttar Pradesh – 66,381 cases", "Maharashtra – 47,101 cases", "Rajasthan – 45,450 cases", "West Bengal – 34,691 cases", "Madhya Pradesh – 32,342 cases"],
                 crimeRate: "Crime rate per 100,000 women:",
-                rateList: ["📌 Telangana – 124.9","📌 Rajasthan – 114.8","📌 Odisha – 112.4","📌 Haryana – 110.3","📌 Kerala – 86.1"],
-                rapeData: "📈 Rape Cases in India",
-                rapeP1: "✔ Around 31,000+ rape cases per year.",
-                rapeP2: "✔ ~89% committed by known persons.",
-                insight: "💡 Most attackers are from the victim's familiar environment.",
-                conviction: "📌 Conviction & Case Outcome",
-                convP1: "✔ Only ~27% of rape cases resulted in conviction.",
-                convP2: "Note: Low conviction rate indicates systemic challenges.",
-                seniorData: "👩‍🦳 Women (35+ Age Group)",
-                seniorP1: "No direct NCRB breakdown for 35+ — inferred from adult data:",
-                seniorList: ["Adult category = 18+ (includes 35+).","In 2023, nearly all 28,821 rape cases involved adult women (18+)."],
-                seniorP2: "📌 Over 95% of rape cases involve adult women (18+).",
+                rateList: ["📌 Telangana – 124.9", "📌 Rajasthan – 114.8", "📌 Odisha – 112.4", "📌 Haryana – 110.3", "📌 Kerala – 86.1"],
+                rapeData: "📈 Rape Cases in India (Recent Data)",
+                rapeP1: "✔ Around 31,000+ rape cases are registered per year in India (based on latest available annual figures).",
+                rapeP2: "✔ Roughly 89% of reported rapes are committed by known persons (relative, acquaintance).",
+                insight: "💡 This shows that many attackers are from the victim’s familiar environment — not strangers.",
+                conviction: "📌 Understanding Conviction & Case Outcome",
+                convP1: "✔ Only about 27% of reported rape cases resulted in conviction — meaning justice delivery is slow and often ineffective.",
+                convP2: "Note: Conviction means the court found the accused guilty after due process — so a low conviction rate indicates systemic challenges.",
+                seniorData: "👩‍🦳 Women (35+ Age Group) — What Data Tells Us",
+                seniorP1: "There is no direct, official national breakdown of rape or domestic violence cases specifically by age 35+ in publicly released NCRB data... we can infer trends from overall adult data:",
+                seniorList: [
+                    "“Adult” category = 18+ (which includes 35+ women).",
+                    "In 2023, nearly all of the 28,821 rape cases recorded involved adult women (18+) with only 849 cases involving minors."
+                ],
+                seniorP2: "📌 Majority of reported rape cases (over 95%) involve adult women aged above 18, which includes the 35+ category.",
                 domTrend: "📊 Domestic Violence Trends",
-                domP1: "Domestic violence falls under cruelty by husband/relatives in NCRB.",
-                domList: ["Cruelty by husband/relatives is the largest crime category.","Thousands of complaints registered with NCW annually."],
+                domP1: "Domestic violence often falls under multiple categories in NCRB data (e.g., cruelty by husband/relatives).",
+                domList: [
+                    "Cruelty by husband/relatives is the largest component of crimes against women — more than sexual crimes.",
+                    "Thousands of complaints every year are also registered with the National Commission for Women (NCW)."
+                ],
                 estimated: "📌 Estimated Case Outcomes",
-                estP1: "✔ Many rape cases remain pending in courts for years.",
-                estP2: "✔ Domestic violence often resolved through family mediation.",
-                mapTitle: "🗺 Top States for Rape Reports (2022)",
-                keyTake: "📌 Key Takeaways",
-                takeList: ["Total crimes (2023): ~4.48 lakh","Rape cases: ~29,670+ per year","Most survivors are adults (18+)","Conviction rate: ~27%","Top states: UP, MH, RJ, WB, MP"],
+                estP1: "✔ Many reported rape cases remain pending or unresolved for years in courts → reflected in the relatively low conviction rate (~27%).",
+                estP2: "✔ Domestic violence is often resolved through settlements or family mediation.",
+                mapTitle: "🗺 Top States for Rape Reports (2022 Statistics)",
+                keyTake: "📌 Key Takeaways Ready For Blog",
+                takeList: [
+                    "Total crimes against women (2023): ~4.48 lakh cases",
+                    "Rape cases reported around ~29,670+ per year",
+                    "Majority of rape survivors are adults (18+)",
+                    "Empirical conviction rates for rape are low (~27%)",
+                    "Highest total crime count by state: UP, MH, RJ, WB, MP"
+                ],
                 conclusion: "Conclusion",
-                conclusionP: "Crimes against women reflect deep societal and systemic issues. Stronger enforcement, faster justice, and cultural change are needed."
+                conclusionP: "Crimes against women reflect deep societal and systemic issues. Addressing this requires stronger law enforcement, faster judicial processes, and cultural change."
             },
             hi: {
                 mainTitle: "भारत में महिलाओं के खिलाफ अपराध: डेटा, वास्तविकता और न्याय",
                 intro: "प्रस्तावना",
-                introP: "भारत में महिलाओं के खिलाफ अपराध सबसे गंभीर सामाजिक और कानूनी चुनौतियों में से एक हैं।",
-                natOverview: "📊 राष्ट्रीय अवलोकन (NCRB 2023)",
-                natP1: "👉 2023 में 4,48,211 अपराध दर्ज।",
-                natList: ["घरेलू क्रूरता (498A): 1,33,676","अपहरण: 88,605","यौन हमला: 83,891","बलात्कार: 29,670"],
-                chargeSheet: "✔ चार्जशीट दर: ~77.6%",
-                stateData: "📍 राज्य-वार डेटा (2023)",
-                stateP1: "NCRB 2023 के अनुसार:",
-                topStates: "शीर्ष राज्य:",
-                stateList: ["उत्तर प्रदेश – 66,381","महाराष्ट्र – 47,101","राजस्थान – 45,450","पश्चिम बंगाल – 34,691","मध्य प्रदेश – 32,342"],
-                crimeRate: "अपराध दर (प्रति 1 लाख):",
-                rateList: ["📌 तेलंगाना – 124.9","📌 राजस्थान – 114.8","📌 ओडिशा – 112.4","📌 हरियाणा – 110.3","📌 केरल – 86.1"],
-                rapeData: "📈 बलात्कार के मामले",
-                rapeP1: "✔ प्रति वर्ष ~31,000+।",
-                rapeP2: "✔ 89% परिचित व्यक्तियों द्वारा।",
-                insight: "💡 अधिकांश हमलावर परिचित होते हैं।",
-                conviction: "📌 दोषसिद्धि",
-                convP1: "✔ केवल ~27% में दोषसिद्धि।",
-                convP2: "नोट: कम दर प्रणालीगत कमियां दर्शाती है।",
-                seniorData: "👩‍🦳 महिलाएं (35+ आयु)",
-                seniorP1: "NCRB में 35+ का अलग डेटा नहीं।",
-                seniorList: ["वयस्क = 18+ (35+ शामिल)।","2023 में अधिकांश मामले वयस्क महिलाओं के।"],
-                seniorP2: "📌 95%+ मामले 18+ महिलाओं के।",
-                domTrend: "📊 घरेलू हिंसा",
-                domP1: "घरेलू हिंसा सबसे बड़ी श्रेणी।",
-                domList: ["पति/रिश्तेदारों द्वारा क्रूरता सर्वाधिक।","NCW में हजारों शिकायतें।"],
-                estimated: "📌 केस परिणाम",
-                estP1: "✔ कई मामले वर्षों तक लंबित।",
-                estP2: "✔ घरेलू हिंसा अक्सर समझौते से सुलझती है।",
-                mapTitle: "🗺 शीर्ष राज्य (2022)",
-                keyTake: "📌 मुख्य बातें",
-                takeList: ["कुल अपराध: ~4.48 लाख","बलात्कार: ~29,670+","अधिकांश पीड़ित वयस्क","दोषसिद्धि: ~27%","शीर्ष राज्य: यूपी, महाराष्ट्र, राजस्थान"],
+                introP: "भारत में महिलाओं के खिलाफ अपराध सबसे गंभीर सामाजिक और कानूनी चुनौतियों में से एक बने हुए हैं। कड़े कानूनों और बढ़ती जागरूकता के बावजूद, हिंसा सभी आयु समूहों को प्रभावित करती है।",
+                natOverview: "📊 राष्ट्रीय अवलोकन — महिलाओं के खिलाफ अपराध (भारत)",
+                natP1: "👉 2023 में, भारत में महिलाओं के खिलाफ 4,48,211 अपराध दर्ज किए गए। इसमें बलात्कार, घरेलू हिंसा, अपहरण आदि शामिल हैं।",
+                natList: [
+                    "घरेलू क्रूरता (धारा 498A): 1,33,676 मामले",
+                    "अपहरण और अगवा: 88,605 मामले",
+                    "यौन हमला (बलात्कार को छोड़कर): 83,891 मामले",
+                    "बलात्कार: 2023 में राष्ट्रीय स्तर पर 29,670 मामले दर्ज किए गए।"
+                ],
+                chargeSheet: "✔ चार्जशीट दर कुल मिलाकर लगभग 77.6% थी - जिसका अर्थ है कि 4 में से 3 मामलों में पुलिस ने औपचारिक आरोप दायर किए।",
+                stateData: "📍 राज्य-वार अपराध डेटा (2023)",
+                stateP1: "NCRB 2023 डेटा के अनुसार:",
+                topStates: "कुल अपराधों के मामले में शीर्ष राज्य:",
+                stateList: ["उत्तर प्रदेश – 66,381", "महाराष्ट्र – 47,101", "राजस्थान – 45,450", "पश्चिम बंगाल – 34,691", "मध्य प्रदेश – 32,342"],
+                crimeRate: "प्रति 1,00,000 महिलाओं पर अपराध दर:",
+                rateList: ["📌 तेलंगाना – 124.9", "📌 राजस्थान – 114.8", "📌 ओडिशा – 112.4", "📌 हरियाणा – 110.3", "📌 केरल – 86.1"],
+                rapeData: "📈 भारत में बलात्कार के मामले (हालिया डेटा)",
+                rapeP1: "✔ भारत में प्रति वर्ष लगभग 31,000+ बलात्कार के मामले दर्ज किए जाते हैं।",
+                rapeP2: "✔ रिपोर्ट किए गए लगभग 89% बलात्कार परिचित व्यक्तियों द्वारा किए जाते हैं।",
+                insight: "💡 यह दर्शाता है कि कई हमलावर पीड़ित के परिचित वातावरण से होते हैं - अजनबी नहीं।",
+                conviction: "📌 दोषसिद्धि और केस के परिणाम को समझना",
+                convP1: "✔ रिपोर्ट किए गए बलात्कार के मामलों में से केवल 27% में दोषसिद्धि हुई - न्याय वितरण धीमा है।",
+                convP2: "नोट: दोषसिद्धि का अर्थ है कि अदालत ने आरोपी को दोषी पाया। कम दर प्रणालीगत चुनौतियों को दर्शाती है।",
+                seniorData: "👩‍🦳 महिलाएं (35+ आयु वर्ग) — डेटा क्या कहता है",
+                seniorP1: "NCRB डेटा में 35+ आयु के लिए कोई सीधा आधिकारिक ब्रेकडाउन नहीं है... हम वयस्क डेटा से रुझानों का अनुमान लगा सकते हैं:",
+                seniorList: [
+                    "“वयस्क” श्रेणी = 18+ (जिसमें 35+ महिलाएं शामिल हैं)।",
+                    "2023 में, लगभग सभी 28,821 बलात्कार के मामले वयस्क महिलाओं से संबंधित थे।"
+                ],
+                seniorP2: "📌 अधिकांश रिपोर्ट किए गए बलात्कार के मामले (95% से अधिक) 18 वर्ष से ऊपर की वयस्क महिलाओं के होते हैं।",
+                domTrend: "📊 घरेलू हिंसा के रुझान",
+                domP1: "घरेलू हिंसा अक्सर NCRB डेटा में 'पति/रिश्तेदारों द्वारा क्रूरता' के तहत आती है।",
+                domList: [
+                    "पति/रिश्तेदारों द्वारा क्रूरता महिलाओं के खिलाफ अपराधों का सबसे बड़ा हिस्सा है।",
+                    "राष्ट्रीय महिला आयोग (NCW) में भी हर साल हजारों शिकायतें दर्ज होती हैं।"
+                ],
+                estimated: "📌 अनुमानित केस परिणाम",
+                estP1: "✔ कई मामले अदालतों में वर्षों तक लंबित रहते हैं → दोषसिद्धि दर ~27% है।",
+                estP2: "✔ घरेलू हिंसा अक्सर समझौतों या पारिवारिक मध्यस्थता के माध्यम से हल की जाती है।",
+                mapTitle: "🗺 बलात्कार रिपोर्ट के लिए शीर्ष राज्य (2022 आंकड़े)",
+                keyTake: "📌 मुख्य बातें (ब्लॉग के लिए)",
+                takeList: [
+                    "कुल अपराध (2023): ~4.48 लाख मामले",
+                    "बलात्कार के मामले: ~29,670+ प्रति वर्ष",
+                    "अधिकांश उत्तरजीवी वयस्क (18+) हैं",
+                    "दोषसिद्धि दर कम है (~27%)",
+                    "शीर्ष राज्य: यूपी, महाराष्ट्र, राजस्थान"
+                ],
                 conclusion: "निष्कर्ष",
-                conclusionP: "कड़े कानून और सामाजिक बदलाव जरूरी हैं।"
+                conclusionP: "महिलाओं के खिलाफ अपराध समाज की गहरी समस्याओं को दर्शाते हैं। इसके लिए कड़े कानून और सामाजिक बदलाव की जरूरत है।"
             },
             mr: {
                 mainTitle: "भारतातील महिलांविरुद्धचे गुन्हे: डेटा, वास्तव आणि न्याय",
                 intro: "प्रस्तावना",
-                introP: "भारतातील महिलांविरुद्धचे गुन्हे हे सर्वात गंभीर सामाजिक आव्हान आहे.",
-                natOverview: "📊 राष्ट्रीय विहंगावलोकन (NCRB 2023)",
-                natP1: "👉 2023 मध्ये 4,48,211 गुन्हे.",
-                natList: ["कौटुंबिक छळ: 1,33,676","अपहरण: 88,605","लैंगिक अत्याचार: 83,891","बलात्कार: 29,670"],
-                chargeSheet: "✔ दोषारोपपत्र दर: ~77.6%",
-                stateData: "📍 राज्यनिहाय डेटा (2023)",
-                stateP1: "NCRB 2023 नुसार:",
-                topStates: "आघाडीची राज्ये:",
-                stateList: ["उत्तर प्रदेश – 66,381","महाराष्ट्र – 47,101","राजस्थान – 45,450","पश्चिम बंगाल – 34,691","मध्य प्रदेश – 32,342"],
-                crimeRate: "गुन्हेगारी दर (प्रति 1 लाख):",
-                rateList: ["📌 तेलंगणा – 124.9","📌 राजस्थान – 114.8","📌 ओडिसा – 112.4","📌 हरियाणा – 110.3","📌 केरळ – 86.1"],
-                rapeData: "📈 बलात्काराची प्रकरणे",
-                rapeP1: "✔ दरवर्षी ~31,000+.",
-                rapeP2: "✔ 89% ओळखीच्या व्यक्तींकडून.",
-                insight: "💡 बहुतेक हल्लेखोर ओळखीचे.",
-                conviction: "📌 दोषसिद्धी",
-                convP1: "✔ केवळ ~27% प्रकरणांत शिक्षा.",
-                convP2: "टीप: कमी दर यंत्रणेतील आव्हाने दर्शवतो.",
-                seniorData: "👩‍🦳 महिला (35+ वयोगट)",
-                seniorP1: "NCRB मध्ये 35+ साठी स्वतंत्र डेटा नाही.",
-                seniorList: ["प्रौढ = 18+ (35+ समाविष्ट).","2023 मधील बहुतेक गुन्हे प्रौढ महिलांचे."],
-                seniorP2: "📌 95%+ गुन्हे 18+ महिलांचे.",
-                domTrend: "📊 घरगुती हिंसाचार",
-                domP1: "घरगुती हिंसाचार सर्वात मोठी श्रेणी.",
-                domList: ["पती/नातेवाईकांकडून छळ सर्वाधिक.","NCW कडे हजारो तक्रारी."],
+                introP: "भारतातील महिलांविरुद्धचे गुन्हे हे सर्वात गंभीर सामाजिक आणि कायदेशीर आव्हानांपैकी एक आहेत. कडक कायदे आणि वाढत्या जागरूकतेनंतरही हिंसाचार सुरूच आहे.",
+                natOverview: "📊 राष्ट्रीय विहंगावलोकन — महिलांविरुद्धचे गुन्हे (भारत)",
+                natP1: "👉 2023 मध्ये, भारतात महिलांविरुद्ध 4,48,211 गुन्हे नोंदवले गेले. यात बलात्कार, घरगुती हिंसाचार, अपहरण इत्यादींचा समावेश आहे.",
+                natList: [
+                    "कौटुंबिक छळ (कलम 498A): 1,33,676 गुन्हे",
+                    "अपहरण आणि पळवून नेणे: 88,605 गुन्हे",
+                    "लैंगिक अत्याचार: 83,891 गुन्हे",
+                    "बलात्कार: 2023 मध्ये राष्ट्रीय स्तरावर 29,670 गुन्हे नोंदवले गेले."
+                ],
+                chargeSheet: "✔ दोषारोपपत्र (Charge-sheet) दर सुमारे 77.6% होता - म्हणजे 4 पैकी 3 प्रकरणांत पोलिसांनी अधिकृत आरोप दाखल केले.",
+                stateData: "📍 राज्यनिहाय गुन्हे डेटा (2023)",
+                stateP1: "NCRB 2023 च्या डेटांनुसार:",
+                topStates: "एकूण गुन्ह्यांच्या बाबतीत आघाडीची राज्ये:",
+                stateList: ["उत्तर प्रदेश – 66,381", "महाराष्ट्र – 47,101", "राजस्थान – 45,450", "पश्चिम बंगाल – 34,691", "मध्य प्रदेश – 32,342"],
+                crimeRate: "दर 1,00,000 महिलांमागे गुन्हेगारी दर:",
+                rateList: ["📌 तेलंगणा – 124.9", "📌 राजस्थान – 114.8", "📌 ओडिसा – 112.4", "📌 हरियाणा – 110.3", "📌 केरळ – 86.1"],
+                rapeData: "📈 भारतातील बलात्काराची प्रकरणे (अलीकडील डेटा)",
+                rapeP1: "✔ भारतात दरवर्षी सुमारे 31,000+ बलात्काराचे गुन्हे नोंदवले जातात.",
+                rapeP2: "✔ सुमारे 89% बलात्कार ओळखीच्या व्यक्तींकडून केले जातात.",
+                insight: "💡 हे दर्शवते की अनेक हल्लेखोर अनोळखी नसून पीडितेच्या परिचयाचे असतात.",
+                conviction: "📌 दोषसिद्धी आणि निकालाची प्रक्रिया",
+                convP1: "✔ नोंदवलेल्या बलात्काराच्या गुन्ह्यांपैकी केवळ 27% प्रकरणांत शिक्षा झाली - न्याय मिळण्यास विलंब होतो.",
+                convP2: "टीप: दोषसिद्धी म्हणजे न्यायालयाने आरोपीला दोषी ठरवणे. कमी दर यंत्रणेतील आव्हाने दर्शवतो.",
+                seniorData: "👩‍🦳 महिला (35+ वयोगट) — डेटा काय सांगतो",
+                seniorP1: "NCRB डेटामध्ये 35+ वयोगटासाठी स्वतंत्र आकडेवारी नाही... आपण प्रौढ डेटावरून अंदाज घेऊ शकतो:",
+                seniorList: [
+                    "“प्रौढ” श्रेणी = 18+ (ज्यामध्ये 35+ महिलांचा समावेश होतो).",
+                    "2023 मधील जवळजवळ सर्व 28,821 बलात्काराचे गुन्हे प्रौढ महिलांशी संबंधित होते."
+                ],
+                seniorP2: "📌 नोंदवलेल्या बलात्काराच्या गुन्ह्यांपैकी बहुतांश (95% पेक्षा जास्त) 18 वर्षांवरील महिलांचे आहेत.",
+                domTrend: "📊 घरगुती हिंसाचाराचे कल",
+                domP1: "घरगुती हिंसाचार सहसा 'पती/नातेवाईकांकडून क्रूरता' या अंतर्गत येतो.",
+                domList: [
+                    "पती/नातेवाईकांकडून क्रूरता हा महिलांविरुद्धच्या गुन्ह्यांचा सर्वात मोठा भाग आहे.",
+                    "राष्ट्रीय महिला आयोगाकडे (NCW) दरवर्षी हजारो तक्रारी येतात."
+                ],
                 estimated: "📌 अंदाजित निकाल",
-                estP1: "✔ अनेक गुन्हे वर्षांनुवर्षे प्रलंबित.",
-                estP2: "✔ घरगुती हिंसाचार तडजोडीने सुटतो.",
-                mapTitle: "🗺 आघाडीची राज्ये (2022)",
-                keyTake: "📌 महत्त्वाचे मुद्दे",
-                takeList: ["एकूण गुन्हे: ~4.48 लाख","बलात्कार: ~29,670+","बहुतेक पीडित प्रौढ","दोषसिद्धी: ~27%","आघाडीची राज्ये: युपी, महाराष्ट्र, राजस्थान"],
+                estP1: "✔ अनेक गुन्हे न्यायालयात वर्षांनुवर्षे प्रलंबित राहतात → दोषसिद्धी दर ~27% आहे.",
+                estP2: "✔ घरगुती हिंसाचार अनेकदा तडजोड किंवा कौटुंबिक मध्यस्थीद्वारे सोडवला जातो.",
+                mapTitle: "🗺 बलात्काराच्या तक्रारींसाठी आघाडीची राज्ये (2022 आकडेवारी)",
+                keyTake: "📌 महत्त्वाचे मुद्दे (ब्लॉगसाठी)",
+                takeList: [
+                    "एकूण गुन्हे (2023): ~4.48 लाख गुन्हे",
+                    "बलात्कार प्रकरणे: ~29,670+ प्रति वर्ष",
+                    "बहुतेक पीडित प्रौढ (18+) आहेत",
+                    "दोषसिद्धी दर कमी आहे (~27%)",
+                    "आघाडीची राज्ये: युपी, महाराष्ट्र, राजस्थान"
+                ],
                 conclusion: "निष्कर्ष",
-                conclusionP: "कायदेशीर आणि सामाजिक बदल आवश्यक आहेत."
+                conclusionP: "महिलांविरुद्धचे गुन्हे समाजातील खोलवर रुजलेल्या समस्या दर्शवतात. यासाठी कायदेशीर आणि सामाजिक बदलांची गरज आहे."
             }
         };
 
         function updateLang(lang) {
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            const btn = Array.from(document.querySelectorAll('.lang-btn')).find(b =>
-                b.textContent.toLowerCase().includes(lang === 'hi' ? 'हिंदी' : lang === 'mr' ? 'मराठी' : 'english')
-            );
-            if (btn) btn.classList.add('active');
+            const activeBtn = Array.from(document.querySelectorAll('.lang-btn')).find(b => b.textContent.toLowerCase().includes(lang === 'hi' ? 'हिंदी' : lang === 'mr' ? 'मराठी' : 'english'));
+            if(activeBtn) activeBtn.classList.add('active');
 
             const d = translations[lang];
-            document.getElementById('content').innerHTML = `
+            const html = `
                 <h1 class="intro-title">${d.mainTitle}</h1>
                 <div class="divider"></div>
-                <h3>${d.intro}</h3><p>${d.introP}</p>
+                
+                <h3>${d.intro}</h3>
+                <p>${d.introP}</p>
+
                 <div class="data-card">
                     <h3>${d.natOverview}</h3>
                     <p>${d.natP1}</p>
-                    <ul>${d.natList.map(i => `<li>${i}</li>`).join('')}</ul>
+                    <ul>${d.natList.map(item => `<li>${item}</li>`).join('')}</ul>
                     <p><strong>${d.chargeSheet}</strong></p>
                 </div>
-                <h3>${d.stateData}</h3><p>${d.stateP1}</p>
+
+                <h3>${d.stateData}</h3>
+                <p>${d.stateP1}</p>
                 <p><strong>${d.topStates}</strong></p>
-                <ul>${d.stateList.map(i => `<li>${i}</li>`).join('')}</ul>
+                <ul>${d.stateList.map(item => `<li>${item}</li>`).join('')}</ul>
+                
                 <p><strong>${d.crimeRate}</strong></p>
-                <ul>${d.rateList.map(i => `<li>${i}</li>`).join('')}</ul>
+                <ul>${d.rateList.map(item => `<li>${item}</li>`).join('')}</ul>
+
                 <div class="data-card">
                     <h3>${d.rapeData}</h3>
-                    <p>${d.rapeP1}</p><p>${d.rapeP2}</p>
+                    <p>${d.rapeP1}</p>
+                    <p>${d.rapeP2}</p>
                     <p><em>${d.insight}</em></p>
                 </div>
-                <h3>${d.conviction}</h3><p>${d.convP1}</p><p><small>${d.convP2}</small></p>
-                <h3>${d.seniorData}</h3><p>${d.seniorP1}</p>
-                <ul>${d.seniorList.map(i => `<li>${i}</li>`).join('')}</ul>
+
+                <h3>${d.conviction}</h3>
+                <p>${d.convP1}</p>
+                <p><small>${d.convP2}</small></p>
+
+                <h3>${d.seniorData}</h3>
+                <p>${d.seniorP1}</p>
+                <ul>${d.seniorList.map(item => `<li>${item}</li>`).join('')}</ul>
                 <p><strong>${d.seniorP2}</strong></p>
+
                 <div class="data-card">
-                    <h3>${d.domTrend}</h3><p>${d.domP1}</p>
-                    <ul>${d.domList.map(i => `<li>${i}</li>`).join('')}</ul>
+                    <h3>${d.domTrend}</h3>
+                    <p>${d.domP1}</p>
+                    <ul>${d.domList.map(item => `<li>${item}</li>`).join('')}</ul>
                 </div>
-                <h3>${d.estimated}</h3><p>${d.estP1}</p><p>${d.estP2}</p>
+
+                <h3>${d.estimated}</h3>
+                <p>${d.estP1}</p>
+                <p>${d.estP2}</p>
+
                 <h3>${d.mapTitle}</h3>
                 <table>
                     <tr><th>State</th><th>Rape Cases (2022)</th></tr>
@@ -229,52 +328,338 @@
                     <tr><td>Maharashtra</td><td>2,904</td></tr>
                     <tr><td>Haryana</td><td>1,787</td></tr>
                 </table>
-                <div class="data-card" style="border-left-color:#00ff88;">
+
+                <div class="data-card" style="border-left-color: #00ff88;">
                     <h3>${d.keyTake}</h3>
-                    <ul>${d.takeList.map(i => `<li>${i}</li>`).join('')}</ul>
+                    <ul>${d.takeList.map(item => `<li>${item}</li>`).join('')}</ul>
                 </div>
-                <h3>${d.conclusion}</h3><p>${d.conclusionP}</p>
+
+                <h3>${d.conclusion}</h3>
+                <p>${d.conclusionP}</p>
             `;
+            document.getElementById('content').innerHTML = html;
         }
 
-        function submitCmt() {
-            var n = document.getElementById("c-name").value;
-            var t = document.getElementById("c-text").value;
-            if (!n || !t) { alert("Please fill both fields"); return; }
-            fetch("https://hersafety-journal-1.onrender.com/comment", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name: n, comment: t })
-            }).then(function(r) {
-                if (r.ok) {
-                    document.getElementById("c-name").value = "";
-                    document.getElementById("c-text").value = "";
-                    loadCmt();
-                }
-            }).catch(function() { alert("Server error. Please try again later."); });
-        }
-
-        function loadCmt() {
-            fetch("https://hersafety-journal-1.onrender.com/comment")
-                .then(function(r) { return r.json(); })
-                .then(function(items) {
-                    var list = document.getElementById("c-list");
-                    list.innerHTML = "";
-                    items.forEach(function(item) {
-                        var div = document.createElement("div");
-                        div.className = "comment-item";
-                        div.innerHTML = "<strong>" + item.name + "</strong><p>" + item.comment + "</p>";
-                        list.appendChild(div);
-                    });
-                }).catch(function(e) { console.error(e); });
-        }
-
-        window.addEventListener("load", function() {
-            updateLang('en');
-            loadCmt();
-        });
+        // Initialize English
+        updateLang('en');
     </script>
 </body>
 </html>
 
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Awareness | HerSafety Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --deep-wine: #1A0505;
+            --secondary-surface: #2D0A0A;
+            --accent-burgundy: #800020;
+            --accent-pink: #FF5E6C;
+            --text-light: #FFF5F5;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        body {
+            background-color: var(--deep-wine);
+            color: var(--text-light);
+            line-height: 1.8;
+            background: radial-gradient(circle at 50% 50%, #2d0a0a 0%, #1a0505 100%);
+            min-height: 100vh;
+        }
+
+        /* Language Switcher */
+        .header-tools {
+            position: fixed;
+            top: 20px; right: 5%;
+            z-index: 1001;
+            display: flex; gap: 10px;
+            background: rgba(45, 10, 10, 0.8);
+            padding: 8px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 94, 108, 0.3);
+        }
+
+        .lang-btn {
+            background: transparent; border: none;
+            color: white; cursor: pointer; padding: 5px 12px;
+            border-radius: 20px; transition: var(--transition);
+            font-weight: 600; font-size: 0.9rem;
+        }
+
+        .lang-btn.active { background: var(--accent-pink); color: var(--deep-wine); }
+
+        /* Header */
+        .blog-header { padding: 100px 5% 40px; text-align: center; }
+        .blog-header h1 { font-size: 3rem; color: var(--accent-pink); margin-bottom: 10px; letter-spacing: 2px; }
+        .blog-header p { opacity: 0.8; font-size: 1.1rem; }
+
+        /* Tabs Navigation */
+        .tabs-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 10%;
+            margin-bottom: 50px;
+        }
+
+        .tab-card {
+            background: var(--secondary-surface);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 94, 108, 0.1);
+            transition: var(--transition);
+        }
+
+        .tab-card i { font-size: 2.5rem; color: var(--accent-pink); margin-bottom: 15px; }
+        .tab-card.active { 
+            background: var(--accent-burgundy); 
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 20px rgba(255, 94, 108, 0.2);
+        }
+        .tab-card:hover { transform: translateY(-5px); border-color: var(--accent-pink); }
+
+        /* Content Area */
+        .content-display {
+            max-width: 1000px;
+            margin: 0 auto 100px;
+            padding: 50px;
+            background: rgba(45, 10, 10, 0.5);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 94, 108, 0.05);
+            animation: fadeIn 0.6s ease;
+        }
+
+        .article-section { margin-bottom: 40px; }
+        .article-section h2 { color: var(--accent-pink); font-size: 2rem; margin-bottom: 20px; border-left: 5px solid var(--accent-pink); padding-left: 15px; }
+        .article-section h3 { color: var(--accent-pink); margin: 25px 0 15px; font-size: 1.4rem; }
+        .article-section p { margin-bottom: 15px; opacity: 0.9; }
+        .article-section ul { padding-left: 20px; margin-bottom: 15px; }
+        .article-section li { margin-bottom: 10px; opacity: 0.9; }
+
+        /* Stats Table */
+        .data-table {
+            width: 100%; border-collapse: collapse; margin: 20px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .data-table th, .data-table td { padding: 12px; border: 1px solid rgba(255, 94, 108, 0.2); text-align: left; }
+        .data-table th { background: var(--accent-burgundy); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .tabs-nav { padding: 0 5%; }
+            .content-display { padding: 25px; margin: 0 5% 50px; }
+            .blog-header h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-tools">
+        <button class="lang-btn active" onclick="setLang('en')">English</button>
+        <button class="lang-btn" onclick="setLang('hi')">हिंदी</button>
+        <button class="lang-btn" onclick="setLang('mr')">मराठी</button>
+    </div>
+
+    <header class="blog-header">
+        <h1 id="main-title">Blog & Awareness</h1>
+        <p id="main-subtitle">Detailed research and analysis on social safety and protection.</p>
+    </header>
+
+    <div class="tabs-nav">
+        <div class="tab-card active" onclick="loadContent('minor')" id="tab-minor">
+            <i class="fas fa-child"></i>
+            <h3 id="t-minor">Minor (Under 18)</h3>
+            <p id="s-minor">Vulnerability & Protection</p>
+        </div>
+        <div class="tab-card" onclick="loadContent('adult')" id="tab-adult">
+            <i class="fas fa-female"></i>
+            <h3 id="t-adult">Adult Women</h3>
+            <p id="s-adult">Social Barriers & Reality</p>
+        </div>
+        <div class="tab-card" onclick="loadContent('senior')" id="tab-senior">
+            <i class="fas fa-user-shield"></i>
+            <h3 id="t-senior">Women (35+ Age)</h3>
+            <p id="s-senior">The Silent Dimension</p>
+        </div>
+    </div>
+
+    <div class="content-display" id="content-area">
+        </div>
+
+    <script>
+        let currentLang = 'en';
+        let currentCategory = 'minor';
+
+        const dataContent = {
+            en: {
+                minor: {
+                    title: "👧 Minor (Under 18) – Vulnerability & Protection",
+                    p1: "Children represent one of the most vulnerable segments of society. Crimes against minor girls are not only legal violations but profound breaches of trust, safety, and childhood itself. Abuse in this age group often involves individuals from the victim’s familiar surroundings — relatives, neighbors, caregivers, or acquaintances.",
+                    p2: "Despite the presence of strict laws such as the Protection of Children from Sexual Offences (POCSO) Act, underreporting remains a serious concern. Fear, social pressure, family reputation, and psychological trauma frequently prevent timely complaints.",
+                    p3: "Beyond physical harm, abuse during childhood can result in long-term psychological consequences, including anxiety, trust issues, emotional distress, and lasting trauma. These cases demand not only legal intervention but survivor-centered care, rehabilitation, and societal responsibility.",
+                    p4: "Protecting minors requires stronger awareness, safe reporting mechanisms, institutional sensitivity, and collective vigilance."
+                },
+                adult: {
+                    title: "👩 Adult Women – Complex Realities & Social Barriers",
+                    p1: "Crimes against adult women often exist within a complex intersection of social, cultural, and economic factors. Data consistently shows that a large percentage of offenders are known to the survivor, indicating that violence frequently emerges from trusted or familiar environments.",
+                    p2: "Adult women face diverse forms of abuse: Sexual violence, Domestic violence, Workplace harassment, Psychological and emotional abuse, and Economic control.",
+                    p3: "One of the major challenges in this category is delayed justice. Lengthy legal processes, evidentiary burdens, social stigma, and victim-blaming attitudes often discourage survivors from pursuing legal remedies. Additionally, many incidents never reach formal records due to fear of retaliation, financial dependency, or family pressure.",
+                    p4: "Addressing abuse in adulthood requires not only legal enforcement but also structural reforms, gender-sensitive policing, social support systems, and cultural change."
+                },
+                senior: {
+                    title: "👩‍🦳 Women (35+ Age Group) – The Silent Dimension of Abuse",
+                    p1: "Abuse against women aged 35 and above often remains less discussed yet deeply significant. This demographic frequently experiences violence within domestic, marital, and familial contexts.",
+                    p2: "Forms of abuse may include: Domestic violence, Marital cruelty, Emotional manipulation, Economic restriction, Psychological abuse, and Sexual violence. Women in this age group often face unique barriers: Social conditioning, Family responsibilities, Financial dependence, and Fear of social isolation.",
+                    p3: "Because many incidents occur within marriage or family structures, survivors may hesitate to report abuse, leading to significant underrepresentation in official statistics. Violence in this stage of life can carry profound emotional and psychological consequences, especially when endured over extended periods.",
+                    p4: "Recognizing this silent dimension is essential for building inclusive awareness, survivor support systems, and equitable access to justice."
+                },
+                shared: {
+                    overviewTitle: "📊 National Overview — India (NCRB 2023)",
+                    stats: "<ul><li>In 2023, India recorded 4,48,211 crimes against women.</li><li>Domestic cruelty (Sec 498A) was the largest portion (1,33,676 cases).</li><li>Charge-sheeting rate: 77.6%</li><li>Over 89% of attackers are known to the victim.</li></ul>",
+                    statesTitle: "📍 State-wise Data (2023)",
+                    casesTitle: "⚖️ Major Cases That Shook India",
+                    cases: "<ul><li><strong>Nirbhaya Case (2012):</strong> Led to major criminal law amendments.</li><li><strong>Kathua Case (2018):</strong> Raised concerns about child safety.</li><li><strong>Unnao & Hathras Cases:</strong> Highlighted systemic gaps and investigation issues.</li></ul>"
+                }
+            },
+            hi: {
+                minor: {
+                    title: "👧 नाबालिग (18 से कम) – संवेदनशीलता और सुरक्षा",
+                    p1: "बच्चे समाज के सबसे संवेदनशील वर्गों में से एक हैं। नाबालिग लड़कियों के खिलाफ अपराध न केवल कानूनी उल्लंघन हैं, बल्कि विश्वास, सुरक्षा और बचपन का गंभीर उल्लंघन हैं। इस आयु वर्ग में दुर्व्यवहार में अक्सर पीड़ित के परिचित परिवेश के लोग शामिल होते हैं - रिश्तेदार, पड़ोसी या देखभाल करने वाले।",
+                    p2: "POCSO अधिनियम जैसे कड़े कानूनों के बावजूद, रिपोर्टिंग की कमी एक गंभीर चिंता बनी हुई है। डर, सामाजिक दबाव और पारिवारिक प्रतिष्ठा अक्सर शिकायतों को रोकते हैं।",
+                    p3: "शारीरिक नुकसान के अलावा, बचपन का दुर्व्यवहार दीर्घकालिक मनोवैज्ञानिक परिणाम जैसे चिंता और भावनात्मक संकट पैदा कर सकता है।",
+                    p4: "नाबालिगों की सुरक्षा के लिए मजबूत जागरूकता और सुरक्षित रिपोर्टिंग तंत्र की आवश्यकता है।"
+                },
+                adult: {
+                    title: "👩 वयस्क महिलाएं – जटिल वास्तविकताएं और सामाजिक बाधाएं",
+                    p1: "वयस्क महिलाओं के खिलाफ अपराध अक्सर सामाजिक, सांस्कृतिक और आर्थिक कारकों के बीच होते हैं। डेटा दिखाता है कि अपराधियों का एक बड़ा प्रतिशत पीड़ित का परिचित होता है।",
+                    p2: "वयस्क महिलाएं विभिन्न रूपों में दुर्व्यवहार का सामना करती हैं: यौन हिंसा, घरेलू हिंसा, कार्यस्थल पर उत्पीड़न और आर्थिक नियंत्रण।",
+                    p3: "न्याय में देरी एक बड़ी चुनौती है। लंबी कानूनी प्रक्रियाएं और सामाजिक कलंक अक्सर पीड़ितों को कानूनी उपचार से हतोत्साहित करते हैं।",
+                    p4: "वयस्कता में दुर्व्यवहार को रोकने के लिए संरचनात्मक सुधार और सामाजिक सहायता प्रणाली की आवश्यकता है।"
+                },
+                senior: {
+                    title: "👩‍🦳 महिलाएं (35+ आयु वर्ग) – दुर्व्यवहार का मौन आयाम",
+                    p1: "35 वर्ष और उससे अधिक उम्र की महिलाओं के खिलाफ दुर्व्यवहार अक्सर कम चर्चित रहता है। यह समूह अक्सर घरेलू और वैवाहिक संदर्भों में हिंसा का अनुभव करता है।",
+                    p2: "दुर्व्यवहार के रूपों में शामिल हैं: घरेलू हिंसा, वैवाहिक क्रूरता, भावनात्मक हेरफेर और आर्थिक प्रतिबंध।",
+                    p3: "चूंकि कई घटनाएं विवाह के भीतर होती हैं, इसलिए पीड़ित रिपोर्ट करने में संकोच करते हैं, जिससे आधिकारिक आंकड़ों में उनकी संख्या कम रहती है।",
+                    p4: "इस मौन आयाम को पहचानना समावेशी जागरूकता और न्याय के लिए आवश्यक है।"
+                },
+                shared: {
+                    overviewTitle: "📊 राष्ट्रीय अवलोकन — भारत (NCRB 2023)",
+                    stats: "<ul><li>2023 में भारत में महिलाओं के खिलाफ 4,48,211 अपराध दर्ज किए गए।</li><li>घरेलू क्रूरता (धारा 498A) के सबसे अधिक 1,33,676 मामले थे।</li><li>दोषसिद्धि दर: लगभग 27%</li><li>89% हमलावर पीड़ित के परिचित होते हैं।</li></ul>",
+                    statesTitle: "📍 राज्य-वार डेटा (2023)",
+                    casesTitle: "⚖️ प्रमुख मामले जिन्होंने भारत को हिला दिया",
+                    cases: "<ul><li><strong>निर्भया मामला (2012):</strong> इसके बाद कानून में कड़े बदलाव हुए।</li><li><strong>कठुआ मामला (2018):</strong> बाल सुरक्षा को लेकर चिंताएं बढ़ीं।</li><li><strong>उन्नाव और हाथरस:</strong> सिस्टम की कमियों और जांच के मुद्दों को उजागर किया।</li></ul>"
+                }
+            },
+            mr: {
+                minor: {
+                    title: "👧 अल्पवयीन (18 वर्षांखालील) – असुरक्षितता आणि संरक्षण",
+                    p1: "मुले हा समाजातील सर्वात असुरक्षित घटक आहे. अल्पवयीन मुलींवरील गुन्हे हे केवळ कायदेशीर उल्लंघन नसून विश्वास आणि सुरक्षिततेचा भंग आहे. यात अनेकदा परिचित व्यक्तींचा समावेश असतो.",
+                    p2: "POCSO सारख्या कडक कायद्यांनंतरही, भीती आणि सामाजिक दबावामुळे अनेक प्रकरणे नोंदवली जात नाहीत.",
+                    p3: "बचपणातील शोषणामुळे दीर्घकालीन मानसिक परिणाम आणि चिंता निर्माण होऊ शकते.",
+                    p4: "अल्पवयीन मुलांच्या संरक्षणासाठी सामाजिक जागरूकता आणि सुरक्षित तक्रार निवारण यंत्रणेची गरज आहे."
+                },
+                adult: {
+                    title: "👩 प्रौढ महिला – गुंतागुंतीची वास्तविकता आणि सामाजिक अडथळे",
+                    p1: "प्रौढ महिलांवरील गुन्हे अनेकदा सामाजिक आणि आर्थिक घटकांशी निगडित असतात. बहुतांश घटनांमध्ये गुन्हेगार हे ओळखीचेच असतात.",
+                    p2: "प्रौढ महिलांना लैंगिक हिंसाचार, घरगुती हिंसाचार आणि कामाच्या ठिकाणी होणारा छळ अशा विविध समस्यांना सामोरे जावे लागते.",
+                    p3: "न्यायासाठी होणारा विलंब आणि सामाजिक कलंक ही मोठी आव्हाने आहेत.",
+                    p4: "प्रौढवयातील शोषण रोखण्यासाठी कायदेशीर अंमलबजावणीसोबतच सामाजिक मानसिकतेत बदल होणे आवश्यक आहे."
+                },
+                senior: {
+                    title: "👩‍🦳 महिला (35+ वयोगट) – शोषणाचे मौन पैलू",
+                    p1: "35 वर्षांवरील महिलांवरील शोषणाबद्दल फारशी चर्चा होत नाही. हा वयोगट अनेकदा कौटुंबिक आणि वैवाहिक हिंसाचाराचा बळी ठरतो.",
+                    p2: "यात घरगुती हिंसाचार, वैवाहिक छळ आणि भावनिक शोषणाचा समावेश होतो.",
+                    p3: "कौटुंबिक जबाबदाऱ्या आणि सामाजिक बहिष्काराच्या भीतीमुळे अनेक महिला तक्रार करण्यास धजावत नाहीत.",
+                    p4: "या मौन पैलूला ओळखून त्यांना न्याय मिळवून देणे गरजेचे आहे."
+                },
+                shared: {
+                    overviewTitle: "📊 राष्ट्रीय विहंगावलोकन — भारत (NCRB 2023)",
+                    stats: "<ul><li>2023 मध्ये भारतात महिलांविरुद्ध 4,48,211 गुन्हे नोंदवले गेले.</li><li>कौटुंबिक छळ (कलम 498A) ही सर्वात मोठी श्रेणी होती (1,33,676 गुन्हे).</li><li>शिक्षा होण्याचे प्रमाण: सुमारे 27%</li><li>89% गुन्हेगार हे ओळखीचे असतात.</li></ul>",
+                    statesTitle: "📍 राज्यनिहाय डेटा (2023)",
+                    casesTitle: "⚖️ भारताला हादरवून सोडणारे प्रमुख खटले",
+                    cases: "<ul><li><strong>निर्भया खटला (2012):</strong> यामुळे कायद्यात मोठे बदल झाले.</li><li><strong>कठुआ खटला (2018):</strong> बालसुरक्षेबद्दल चिंता वाढली.</li><li><strong>उन्नाव आणि हाथरस:</strong> यंत्रणेतील त्रुटी समोर आल्या.</li></ul>"
+                }
+            }
+        };
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update UI Labels
+            const labels = {
+                en: ["Blog & Awareness", "Data analysis on protection", "Minor (Under 18)", "Adult Women", "Women (35+ Age)"],
+                hi: ["ब्लॉग और जागरूकता", "सुरक्षा पर डेटा विश्लेषण", "नाबालिग (18 से कम)", "वयस्क महिलाएं", "महिलाएं (35+ आयु)"],
+                mr: ["ब्लॉग आणि जागरूकता", "सुरक्षेवर डेटा विश्लेषण", "अल्पवयीन (18 वर्षांखालील)", "प्रौढ महिला", "महिला (35+ वयोगट)"]
+            };
+            
+            document.getElementById('main-title').innerText = labels[lang][0];
+            document.getElementById('main-subtitle').innerText = labels[lang][1];
+            document.getElementById('t-minor').innerText = labels[lang][2];
+            document.getElementById('t-adult').innerText = labels[lang][3];
+            document.getElementById('t-senior').innerText = labels[lang][4];
+            
+            loadContent(currentCategory);
+        }
+
+        function loadContent(category) {
+            currentCategory = category;
+            document.querySelectorAll('.tab-card').forEach(card => card.classList.remove('active'));
+            document.getElementById('tab-' + category).classList.add('active');
+
+            const content = dataContent[currentLang][category];
+            const shared = dataContent[currentLang].shared;
+            const area = document.getElementById('content-area');
+
+            area.innerHTML = `
+                <div class="article-section">
+                    <h2>${content.title}</h2>
+                    <p>${content.p1}</p>
+                    <p>${content.p2}</p>
+                    <p>${content.p3}</p>
+                    <p>${content.p4}</p>
+                </div>
+
+                <div class="article-section">
+                    <h3>${shared.overviewTitle}</h3>
+                    ${shared.stats}
+                </div>
+
+                <div class="article-section">
+                    <h3>${shared.statesTitle}</h3>
+                    <table class="data-table">
+                        <tr><th>State</th><th>Total Crimes (2023)</th></tr>
+                        <tr><td>Uttar Pradesh</td><td>66,381</td></tr>
+                        <tr><td>Maharashtra</td><td>47,101</td></tr>
+                        <tr><td>Rajasthan</td><td>45,450</td></tr>
+                        <tr><td>West Bengal</td><td>34,691</td></tr>
+                    </table>
+                </div>
+
+                <div class="article-section">
+                    <h3>${shared.casesTitle}</h3>
+                    ${shared.cases}
+                </div>
+            `;
+        }
+
+        // Initialize
+        loadContent('minor');
+    </script>
+</body>
+</html>
