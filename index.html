@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HerSafety Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --deep-wine: #1A0505;        
+            --secondary-surface: #2D0A0A; 
+            --accent-burgundy: #800020;  
+            --accent-pink: #FF5E6C;      
+            --text-light: #FFF5F5;       
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body {
+            background-color: var(--deep-wine);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            background-color: rgba(102, 51, 51, 0.95);
+            padding: 1rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 94, 108, 0.2);
+        }
+
+        .logo { font-size: 1.8rem; font-weight: 700; color: var(--accent-pink); text-decoration: none; }
+
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav a { color: var(--text-light); text-decoration: none; font-weight: 500; transition: var(--transition); }
+        nav a:hover { color: var(--accent-pink); }
+
+        .lang-switcher { display: flex; gap: 0.5rem; }
+        .lang-btn {
+            background: transparent; border: 1px solid var(--accent-pink);
+            color: var(--text-light); cursor: pointer; padding: 0.3rem 0.8rem;
+            border-radius: 4px; transition: var(--transition);
+        }
+        .lang-btn.active { background: var(--accent-pink); color: var(--deep-wine); font-weight: bold; }
+
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 0 5%; 
+            background: linear-gradient(rgba(26, 5, 5, 0.7), rgba(26, 5, 5, 0.8)), 
+                        url('https://i.pinimg.com/1200x/f0/4d/e4/f04de42a3d278b0d4c2e3edf756bfcd5.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-title { font-size: 4rem; margin-bottom: 1rem; color: #fff; text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); }
+        .tagline { font-size: 1.5rem; margin-bottom: 2rem; color: var(--accent-pink); font-weight: 500; letter-spacing: 1px; }
+        .hero-desc { max-width: 800px; margin-bottom: 2.5rem; font-size: 1.1rem; opacity: 0.9; }
+
+        .cta-button {
+            background-color: var(--accent-pink); color: var(--deep-wine);
+            padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none;
+            font-weight: 600; transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(255, 94, 108, 0.3);
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 94, 108, 0.5);
+            background-color: #ff7a86;
+        }
+
+        .section { padding: 8rem 10%; }
+        .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 3rem; color: var(--accent-pink); }
+
+        .card-main {
+            background: var(--secondary-surface); padding: 3.5rem;
+            border-radius: 20px; text-align: center; border: 1px solid rgba(255, 94, 108, 0.1);
+        }
+
+        .cards-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem;
+        }
+
+        .card {
+            background: var(--secondary-surface); 
+            border-radius: 20px; text-align: center; transition: var(--transition);
+            border: 1px solid rgba(255, 94, 108, 0.05);
+            overflow: hidden;
+        }
+        .card:hover { 
+            transform: translateY(-10px); 
+            border-color: var(--accent-pink);
+            box-shadow: 0 10px 30px rgba(255, 94, 108, 0.2);
+        }
+
+        .card-img-wrapper {
+            width: 100%; height: 250px;
+            overflow: hidden;
+        }
+        .card-img-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: var(--transition); opacity: 0.8;
+        }
+        .card:hover .card-img-wrapper img { transform: scale(1.1); opacity: 1; }
+
+        .card-content { padding: 2rem; }
+        .card i { font-size: 2.5rem; color: var(--accent-pink); margin-bottom: 1rem; }
+
+        .disclaimer-content {
+            background: rgba(128, 0, 32, 0.1); padding: 2.5rem; 
+            border-radius: 15px; border-left: 5px solid var(--accent-burgundy);
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">HerSafety Journal</a>
+        <nav>
+            <ul id="navMenu">
+                <li><a href="index.html" id="nav-home">Home</a></li>
+                <li><a href="blog.html" id="nav-blog">Blog</a></li>
+                <li><a href="case.html" id="nav-cases">Major Cases</a></li>
+                <li><a href="law.html" id="nav-laws">Safety Laws</a></li>
+            </ul>
+        </nav>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="changeLanguage('en')">English</button>
+            <button class="lang-btn" onclick="changeLanguage('hi')">Hindi</button>
+            <button class="lang-btn" onclick="changeLanguage('mr')">Marathi</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 class="hero-title" id="hero-title">HerSafety Journal</h1>
+        <div class="tagline" id="tagline">Awareness • Research • Social Understanding</div>
+        <p class="hero-desc" id="hero-desc">
+            A structured awareness platform dedicated to promoting understanding of social safety concerns, 
+            abuse-related challenges, and legal protection frameworks affecting women across different age groups.
+        </p>
+        <a href="blog.html" class="cta-button" id="cta-btn">Read the Blog</a>
+    </section>
+
+    <section class="section reveal">
+        <h2 class="section-title" id="title-obj">Objective</h2>
+        <div class="card-main">
+            <p id="text-obj" style="font-size: 1.15rem;">HerSafety Journal aims to present factual, analytical, and awareness-oriented content focused on abuse awareness, social safety discussions, and women protection mechanisms.</p>
+        </div>
+    </section>
+
+    <section class="section reveal">
+        <h2 class="section-title" id="title-focus">Our Focus Areas</h2>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://i.pinimg.com/1200x/f0/4d/e4/f04de42a3d278b0d4c2e3edf756bfcd5.jpg" alt="Abuse Awareness">
+                </div>
+                <div class="card-content">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 id="card-abuse-t">Abuse Awareness</h3>
+                    <p id="card-abuse-d">Understanding social safety challenges and vulnerability factors affecting women.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" alt="Data Analysis">
+                </div>
+                <div class="card-content">
+                    <i class="fas fa-chart-line"></i>
+                    <h3 id="card-data-t">Data & Analysis</h3>
+                    <p id="card-data-d">Research-driven observations, structured insights, and awareness-focused interpretation.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=800" alt="Legal Protection">
+                </div>
+                <div class="card-content">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3 id="card-legal-t">Legal Protection</h3>
+                    <p id="card-legal-d">Educational overview of laws and safety frameworks designed for women protection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal">
+        <h2 class="section-title" id="title-disc">Disclaimer</h2>
+        <div class="disclaimer-content">
+            <p id="text-disc">The content presented on this platform is intended solely for awareness, educational, and academic purposes. All discussions are framed in a neutral, respectful, and analytical manner.</p>
+        </div>
+    </section>
+
+    <script>
+        const translations = {
+            en: {
+                navHome: "Home", navBlog: "Blog", navCases: "Major Cases", navLaws: "Safety Laws",
+                title: "HerSafety Journal", tagline: "Awareness • Research • Social Understanding",
+                desc: "A structured awareness platform dedicated to promoting understanding of social safety concerns, abuse-related challenges, and legal protection frameworks affecting women across different age groups.",
+                cta: "Read the Blog", titleObj: "Objective", textObj: "HerSafety Journal aims to present factual, analytical, and awareness-oriented content focused on abuse awareness, social safety discussions, and women protection mechanisms.",
+                titleFocus: "Our Focus Areas", abuseT: "Abuse Awareness", abuseD: "Understanding social safety challenges and vulnerability factors affecting women.",
+                dataT: "Data & Analysis", dataD: "Research-driven observations, structured insights, and awareness-focused interpretation.",
+                legalT: "Legal Protection", legalD: "Educational overview of laws and safety frameworks designed for women protection.",
+                titleDisc: "Disclaimer", textDisc: "The content presented on this platform is intended solely for awareness, educational, and academic purposes."
+            },
+            hi: {
+                navHome: "होम", navBlog: "ब्लॉग", navCases: "प्रमुख मामले", navLaws: "सुरक्षा कानून",
+                title: "HerSafety जर्नल", tagline: "जागरूकता • अनुसंधान • सामाजिक समझ",
+                desc: "एक संरचित जागरूकता मंच जो विभिन्न आयु वर्ग की महिलाओं को प्रभावित करने वाली सामाजिक सुरक्षा चुनौतियों और कानूनी ढांचे की समझ को बढ़ावा देता है।",
+                cta: "ब्लॉग पढ़ें", titleObj: "उद्देश्य", textObj: "HerSafety जर्नल का उद्देश्य दुर्व्यवहार जागरूकता और महिला सुरक्षा तंत्र पर तथ्यात्मक और विश्लेषणात्मक सामग्री प्रदान करना है।",
+                titleFocus: "हमारे फोकस क्षेत्र", abuseT: "दुर्व्यवहार जागरूकता", abuseD: "महिलाओं को प्रभावित करने वाली सामाजिक सुरक्षा चुनौतियों को समझना।",
+                dataT: "डेटा और विश्लेषण", dataD: "अनुसंधान-आधारित अवलोकन और जागरूकता-केंद्रित व्याख्या।",
+                legalT: "कानूनी सुरक्षा", legalD: "महिला सुरक्षा के लिए बनाए गए कानूनों का शैक्षिक अवलोकन।",
+                titleDisc: "अस्वीकरण", textDisc: "इस मंच पर प्रस्तुत सामग्री केवल जागरूकता और शैक्षिक उद्देश्यों के लिए है।"
+            },
+            mr: {
+                navHome: "होम", navBlog: "ब्लॉग", navCases: "प्रमुख खटले", navLaws: "सुरक्षा कायदे",
+                title: "HerSafety जर्नल", tagline: "जागरूकता • संशोधन • सामाजिक समज",
+                desc: "महिलांच्या सुरक्षिततेच्या समस्या आणि कायदेशीर चौकटींबद्दल जागरूकता निर्माण करण्यासाठी समर्पित व्यासपीठ.",
+                cta: "ब्लॉग वाचा", titleObj: "उद्देश", textObj: "HerSafety जर्नलचे उद्दिष्ट शोषण जागरूकता आणि महिला संरक्षण यंत्रणेवर आधारित माहिती प्रदान करणे आहे.",
+                titleFocus: "आमची मुख्य क्षेत्रे", abuseT: "शोषण जागरूकता", abuseD: "महिलांच्या सुरक्षिततेसमोरील आव्हाने समजून घेणे.",
+                dataT: "डेटा आणि विश्लेषण", dataD: "संशोधन-आधारित निरीक्षणे आणि जागरूकता-केंद्रित व्याख्या.",
+                legalT: "कायदेशीर संरक्षण", legalD: "महिला संरक्षणासाठी तयार केलेल्या कायद्यांचे विहंगावलोकन.",
+                titleDisc: "डिस्क्लेमर", textDisc: "या प्लॅटफॉर्मवर सादर केलेली माहिती केवळ जागरूकता आणि शैक्षणिक हेतूंसाठी आहे।"
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.getElementById('nav-home').innerText = translations[lang].navHome;
+            document.getElementById('nav-blog').innerText = translations[lang].navBlog;
+            document.getElementById('nav-cases').innerText = translations[lang].navCases;
+            document.getElementById('nav-laws').innerText = translations[lang].navLaws;
+            document.getElementById('hero-title').innerText = translations[lang].title;
+            document.getElementById('tagline').innerText = translations[lang].tagline;
+            document.getElementById('hero-desc').innerText = translations[lang].desc;
+            document.getElementById('cta-btn').innerText = translations[lang].cta;
+            document.getElementById('title-obj').innerText = translations[lang].titleObj;
+            document.getElementById('text-obj').innerText = translations[lang].textObj;
+            document.getElementById('title-focus').innerText = translations[lang].titleFocus;
+            document.getElementById('title-disc').innerText = translations[lang].titleDisc;
+            document.getElementById('text-disc').innerText = translations[lang].textDisc;
+            document.getElementById('card-abuse-t').innerText = translations[lang].abuseT;
+            document.getElementById('card-abuse-d').innerText = translations[lang].abuseD;
+            document.getElementById('card-data-t').innerText = translations[lang].dataT;
+            document.getElementById('card-data-d').innerText = translations[lang].dataD;
+            document.getElementById('card-legal-t').innerText = translations[lang].legalT;
+            document.getElementById('card-legal-d').innerText = translations[lang].legalD;
+
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

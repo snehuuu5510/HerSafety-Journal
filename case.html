@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Major Cases | HerSafety Awareness</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --deep-wine: #1A0505;
+            --secondary-surface: #2D0A0A;
+            --accent-burgundy: #800020;
+            --accent-pink: #FF5E6C;
+            --text-light: #FFF5F5;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--deep-wine);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Cinematic Background */
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(128, 0, 32, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 94, 108, 0.1) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        .bg-texture {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        /* Language Switcher */
+        .header-nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(26, 5, 5, 0.9), transparent);
+        }
+
+        .lang-btn {
+            background: rgba(45, 10, 10, 0.6);
+            border: 1px solid rgba(255, 94, 108, 0.3);
+            color: white;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--accent-pink);
+            color: var(--deep-wine);
+            border-color: var(--accent-pink);
+            font-weight: bold;
+        }
+
+        /* Page Header */
+        .hero {
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--accent-pink);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255, 94, 108, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        /* Content Container */
+        .content-section {
+            max-width: 1000px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+        }
+
+        .intro-block {
+            background: rgba(45, 10, 10, 0.4);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255, 94, 108, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Case Cards Styles */
+        .case-card {
+            background: var(--secondary-surface);
+            margin-bottom: 40px;
+            border-radius: 15px;
+            padding: 40px;
+            position: relative;
+            border: 1px solid rgba(255, 94, 108, 0.05);
+            transition: var(--transition);
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .case-card.reveal {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .case-card:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-pink);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .case-num {
+            position: absolute;
+            top: 20px; right: 30px;
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(255, 94, 108, 0.05);
+            z-index: 0;
+        }
+
+        .case-card h2 {
+            color: var(--accent-pink);
+            font-size: 2rem;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .impact-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(128, 0, 32, 0.2);
+            border-left: 4px solid var(--accent-pink);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .impact-box h4 {
+            color: var(--accent-pink);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .impact-box ul {
+            list-style: none;
+        }
+
+        .impact-box li::before {
+            content: "•";
+            color: var(--accent-pink);
+            font-weight: bold;
+            display: inline-block; 
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .impact-box li { margin-bottom: 8px; padding-left: 1em; }
+
+        /* Generic Sections */
+        .conclusion-block {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, var(--accent-burgundy), var(--deep-wine));
+            border-radius: 20px;
+            margin-top: 80px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .case-card { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+    <div class="bg-texture"></div>
+
+    <header class="header-nav">
+        <button class="lang-btn active" onclick="setLang('en')">English</button>
+        <button class="lang-btn" onclick="setLang('hi')">हिंदी</button>
+        <button class="lang-btn" onclick="setLang('mr')">मराठी</button>
+    </header>
+
+    <section class="hero">
+        <h1 id="hero-title">Major Cases That Shaped Public Awareness</h1>
+        <p id="hero-sub">Exploring the pivotal moments that triggered legal reforms and social discourse in India.</p>
+    </section>
+
+    <main class="content-section">
+        <div class="intro-block" id="intro-content">
+            </div>
+
+        <div id="cases-container">
+            </div>
+
+        <div class="conclusion-block" id="conclusion-content">
+            </div>
+    </main>
+
+    <script>
+        const content = {
+            en: {
+                heroTitle: "Major Cases That Shaped Public Discourse & Legal Awareness",
+                heroSub: "Moments that significantly influenced public dialogue, legal frameworks, and institutional accountability in India.",
+                intro: "<h3>Introduction</h3><p>Certain criminal cases transcend individual incidents and become defining moments in a nation’s social and legal consciousness. These cases not only expose systemic failures but also trigger public debate, legal reforms, and widespread awareness regarding women’s safety and justice.</p>",
+                cases: [
+                    {
+                        id: "1️⃣",
+                        title: "Nirbhaya Case (2012, Delhi)",
+                        desc: "One of the most widely discussed cases in India’s history, the Nirbhaya incident involved a brutal assault that shocked the nation. The case led to unprecedented public protests demanding stricter laws and faster justice.",
+                        impact: ["Major amendments to criminal law", "Introduction of stricter sexual assault provisions", "Expansion of definitions of sexual crimes", "Fast-track courts for sexual violence cases"]
+                    },
+                    {
+                        id: "2️⃣",
+                        title: "Kathua Case (2018, Jammu & Kashmir)",
+                        desc: "This case involved the abduction and assault of a minor girl, sparking national outrage. Beyond the crime itself, the case exposed issues of communal tension, investigative challenges, and the politicization of justice.",
+                        impact: ["Renewed national focus on child protection", "Strengthening of discussions around POCSO implementation", "Debates on institutional impartiality"]
+                    },
+                    {
+                        id: "3️⃣",
+                        title: "Unnao Case (2017, Uttar Pradesh)",
+                        desc: "The Unnao case highlighted the dangers of power imbalance, survivor intimidation, and political interference. It became a critical example of how systemic barriers can obstruct justice.",
+                        impact: ["Increased scrutiny of victim protection mechanisms", "Conversations on political accountability", "Awareness regarding witness protection"]
+                    },
+                    {
+                        id: "4️⃣",
+                        title: "Hathras Case (2020, Uttar Pradesh)",
+                        desc: "This incident triggered widespread debate on caste, policing procedures, forensic transparency, and media ethics. The handling of the case became as widely discussed as the crime itself.",
+                        impact: ["National debate on investigative protocols", "Discussions on dignity and survivor rights", "Focus on institutional transparency"]
+                    },
+                    {
+                        id: "5️⃣",
+                        title: "Domestic Violence & Marital Abuse (Broader Pattern)",
+                        desc: "While high-profile sexual violence cases often gain media attention, a significant portion of abuse occurs within domestic environments. Thousands of women annually report: psychological abuse, physical violence, economic control, and emotional manipulation.",
+                        impact: ["Increased recognition of domestic abuse as a serious legal issue", "Greater awareness of Section 498A", "Expansion of support services and helplines"]
+                    }
+                ],
+                sysObs: "<h3>Systemic Observations</h3><p>✔ Delayed justice<br>✔ Survivor vulnerability<br>✔ Social stigma<br>✔ Institutional challenges<br>✔ Media influence on public perception</p>",
+                conclusion: "<h2>Conclusion</h2><p>Major criminal cases play a critical role in shaping societal awareness and legal evolution. While legal frameworks continue to strengthen, consistent enforcement, survivor-centered justice, and cultural transformation remain essential for meaningful progress.</p><p><strong>Justice is not defined solely by laws, but by their effective implementation and accessibility.</strong></p>"
+            },
+            hi: {
+                heroTitle: "प्रमुख मामले जिन्होंने सार्वजनिक विमर्श और कानूनी जागरूकता को आकार दिया",
+                heroSub: "वे क्षण जिन्होंने भारत में सार्वजनिक संवाद, कानूनी ढांचे और संस्थागत जवाबदेही को महत्वपूर्ण रूप से प्रभावित किया।",
+                intro: "<h3>प्रस्तावना</h3><p>कुछ आपराधिक मामले व्यक्तिगत घटनाओं से ऊपर उठकर राष्ट्र की सामाजिक और कानूनी चेतना में परिभाषित क्षण बन जाते हैं। ये मामले न केवल प्रणालीगत विफलताओं को उजागर करते हैं, बल्कि महिलाओं की सुरक्षा और न्याय के संबंध में सार्वजनिक बहस, कानूनी सुधार और व्यापक जागरूकता भी पैदा करते हैं।</p>",
+                cases: [
+                    {
+                        id: "1️⃣",
+                        title: "निर्भया मामला (2012, दिल्ली)",
+                        desc: "भारत के इतिहास में सबसे अधिक चर्चित मामलों में से एक, निर्भया घटना में एक क्रूर हमला शामिल था जिसने राष्ट्र को झकझोर कर रख दिया था। इस मामले के कारण सख्त कानून और तेज न्याय की मांग को लेकर अभूतपूर्व सार्वजनिक विरोध प्रदर्शन हुए।",
+                        impact: ["आपराधिक कानून में प्रमुख संशोधन", "सख्त यौन हमला प्रावधानों की शुरुआत", "यौन अपराधों की परिभाषाओं का विस्तार", "यौन हिंसा के मामलों के लिए फास्ट-ट्रैक अदालतें"]
+                    },
+                    {
+                        id: "2️⃣",
+                        title: "कठुआ मामला (2018, जम्मू और कश्मीर)",
+                        desc: "इस मामले में एक नाबालिग लड़की का अपहरण और उत्पीड़न शामिल था, जिससे राष्ट्रव्यापी आक्रोश फैल गया। अपराध के अलावा, इस मामले ने सांप्रदायिक तनाव, खोजी चुनौतियों और न्याय के राजनीतिकरण के मुद्दों को उजागर किया।",
+                        impact: ["बाल संरक्षण पर नया राष्ट्रीय ध्यान", "POCSO कार्यान्वयन के आसपास चर्चा को मजबूत करना", "संस्थागत निष्पक्षता पर बहस"]
+                    },
+                    {
+                        id: "3️⃣",
+                        title: "उन्नाव मामला (2017, उत्तर प्रदेश)",
+                        desc: "उन्नाव मामले ने शक्ति असंतुलन, उत्तरजीवी को डराने-धमकाने और राजनीतिक हस्तक्षेप के खतरों को उजागर किया। यह इस बात का महत्वपूर्ण उदाहरण बन गया कि कैसे प्रणालीगत बाधाएं न्याय में बाधा डाल सकती हैं।",
+                        impact: ["पीड़ित सुरक्षा तंत्र की जांच में वृद्धि", "राजनीतिक जवाबदेही पर बातचीत", "गवाहों की सुरक्षा के संबंध में जागरूकता"]
+                    },
+                    {
+                        id: "4️⃣",
+                        title: "हाथरस मामला (2020, उत्तर प्रदेश)",
+                        desc: "इस घटना ने जाति, पुलिस प्रक्रियाओं, फोरेंसिक पारदर्शिता और मीडिया नैतिकता पर व्यापक बहस छेड़ दी। मामले की हैंडलिंग उतनी ही चर्चा में रही जितना कि खुद अपराध।",
+                        impact: ["खोजी प्रोटोकॉल पर राष्ट्रीय बहस", "गरिमा और उत्तरजीवी के अधिकारों पर चर्चा", "संस्थागत पारदर्शिता पर ध्यान"]
+                    },
+                    {
+                        id: "5️⃣",
+                        title: "घरेलू हिंसा और वैवाहिक दुर्व्यवहार (व्यापक पैटर्न)",
+                        desc: "जबकि हाई-प्रोफाइल यौन हिंसा के मामले अक्सर मीडिया का ध्यान आकर्षित करते हैं, दुर्व्यवहार का एक बड़ा हिस्सा घरेलू वातावरण के भीतर होता है। हजारों महिलाएं मनोवैज्ञानिक दुर्व्यवहार, शारीरिक हिंसा और आर्थिक नियंत्रण की रिपोर्ट करती हैं।",
+                        impact: ["घरेलू दुर्व्यवहार को एक गंभीर कानूनी मुद्दे के रूप में बढ़ती मान्यता", "धारा 498A के बारे में अधिक जागरूकता", "सहायता सेवाओं और हेल्पलाइन का विस्तार"]
+                    }
+                ],
+                sysObs: "<h3>प्रणालीगत अवलोकन</h3><p>✔ न्याय में देरी<br>✔ उत्तरजीवी की संवेदनशीलता<br>✔ सामाजिक कलंक<br>✔ संस्थागत चुनौतियां<br>✔ सार्वजनिक धारणा पर मीडिया का प्रभाव</p>",
+                conclusion: "<h2>निष्कर्ष</h2><p>प्रमुख आपराधिक मामले सामाजिक जागरूकता और कानूनी विकास को आकार देने में महत्वपूर्ण भूमिका निभाते हैं। न्याय केवल कानूनों द्वारा परिभाषित नहीं होता है, बल्कि उनके प्रभावी कार्यान्वयन और पहुंच द्वारा परिभाषित होता है।</p>"
+            },
+            mr: {
+                heroTitle: "प्रमुख खटले ज्यांनी सार्वजनिक जागरूकता आणि कायदेशीर जाणीव निर्माण केली",
+                heroSub: "भारतातील सार्वजनिक संवाद, कायदेशीर चौकट आणि संस्थागत उत्तरदायित्वावर लक्षणीय परिणाम करणारे क्षण.",
+                intro: "<h3>प्रस्तावना</h3><p>काही गुन्हेगारी प्रकरणे वैयक्तिक घटनांच्या पलीकडे जातात आणि राष्ट्राच्या सामाजिक आणि कायदेशीर जाणीवेतील महत्त्वाचे क्षण बनतात. हे खटले केवळ यंत्रणेतील त्रुटी उघड करत नाहीत तर महिलांची सुरक्षा आणि न्यायाबाबत सार्वजनिक चर्चा आणि कायदेशीर सुधारणांना चालना देतात.</p>",
+                cases: [
+                    {
+                        id: "1️⃣",
+                        title: "निर्भया खटला (2012, दिल्ली)",
+                        desc: "भारताच्या इतिहासातील सर्वात चर्चिलेल्या प्रकरणांपैकी एक, निर्भया घटनेतील क्रूर हल्ल्याने देशाला हादरवून सोडले. या खटल्यामुळे कडक कायदे आणि जलद न्यायाच्या मागणीसाठी अभूतपूर्व जनआंदोलन झाले.",
+                        impact: ["फौजदारी कायद्यात मोठे बदल", "कडक लैंगिक अत्याचार तरतुदी लागू", "लैंगिक गुन्ह्यांच्या व्याख्यांचा विस्तार", "लैंगिक हिंसाचाराच्या प्रकरणांसाठी जलदगती न्यायालये"]
+                    },
+                    {
+                        id: "2️⃣",
+                        title: "कठुआ खटला (2018, जम्मू आणि काश्मीर)",
+                        desc: "या प्रकरणात एका अल्पवयीन मुलीचे अपहरण आणि छळ करण्यात आला होता, ज्यामुळे देशभरात संताप व्यक्त झाला. या खटल्याने तपासातील आव्हाने आणि न्यायाचे राजकारण यांसारखे मुद्दे उघड केले.",
+                        impact: ["बाल संरक्षणावर राष्ट्रीय लक्ष", "POCSO अंमलबजावणीबद्दल सखोल चर्चा", "संस्थागत निष्पक्षतेवर वादविवाद"]
+                    },
+                    {
+                        id: "3️⃣",
+                        title: "उन्नाव खटला (2017, उत्तर प्रदेश)",
+                        desc: "उन्नाव खटल्याने सत्तेचा असमतोल, पीडितेची भीती आणि राजकीय हस्तक्षेपाचे धोके अधोरेखित केले. यंत्रणेतील अडथळे न्यायात कशा प्रकारे अडथळा आणू शकतात याचे हे महत्त्वाचे उदाहरण ठरले.",
+                        impact: ["पीडित संरक्षण यंत्रणेची तपासणी", "राजकीय उत्तरदायित्वावर चर्चा", "साक्षीदार संरक्षणाबाबत जागरूकता"]
+                    },
+                    {
+                        id: "4️⃣",
+                        title: "हाथरस खटला (2020, उत्तर प्रदेश)",
+                        desc: "या घटनेने जात, पोलिस कार्यपद्धती आणि न्यायवैद्यक पारदर्शकतेवर व्यापक वादविवाद सुरू केले. गुन्ह्याइतकीच या खटल्याच्या हाताळणीची चर्चा झाली.",
+                        impact: ["तपास प्रोटोकॉलवर राष्ट्रीय चर्चा", "सन्मान आणि पीडितेच्या हक्कांवर चर्चा", "संस्थागत पारदर्शकतेवर लक्ष"]
+                    },
+                    {
+                        id: "5️⃣",
+                        title: "घरगुती हिंसाचार (व्यापक स्वरूप)",
+                        desc: "मोठ्या लैंगिक हिंसाचाराच्या प्रकरणांना माध्यमांचे लक्ष मिळते, परंतु छळाचा मोठा भाग घरगुती वातावरणात घडतो. हजारो महिला दरवर्षी शारीरिक हिंसाचार आणि मानसिक छळाची तक्रार करतात.",
+                        impact: ["घरगुती छळाला गंभीर कायदेशीर मुद्दा म्हणून मान्यता", "कलम 498A बद्दल वाढलेली जागरूकता", "मदत सेवा आणि हेल्पलाईनचा विस्तार"]
+                    }
+                ],
+                sysObs: "<h3>प्रणालीगत निरीक्षणे</h3><p>✔ न्यायासाठी विलंब<br>✔ पीडितेची असुरक्षितता<br>✔ सामाजिक कलंक<br>✔ संस्थागत आव्हाने<br>✔ माध्यमांचा प्रभाव</p>",
+                conclusion: "<h2>निष्कर्ष</h2><p>प्रमुख गुन्हेगारी खटले सामाजिक जागरूकता आणि कायदेशीर उत्क्रांती घडवण्यात महत्त्वाची भूमिका बजावतात. न्याय केवळ कायद्यांनी ठरत नाही, तर त्यांच्या प्रभावी अंमलबजावणीने ठरतो.</p>"
+            }
+        };
+
+        function setLang(lang) {
+            const d = content[lang];
+            
+            // Buttons UI
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase().includes(lang === 'en' ? 'english' : lang === 'hi' ? 'हिंदी' : 'मराठी')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Hero
+            document.getElementById('hero-title').innerText = d.heroTitle;
+            document.getElementById('hero-sub').innerText = d.heroSub;
+
+            // Intro
+            document.getElementById('intro-content').innerHTML = d.intro + d.sysObs;
+
+            // Cases
+            const container = document.getElementById('cases-container');
+            container.innerHTML = '';
+            d.cases.forEach(c => {
+                const card = document.createElement('div');
+                card.className = 'case-card';
+                card.innerHTML = `
+                    <div class="case-num">${c.id}</div>
+                    <h2>${c.title}</h2>
+                    <p>${c.desc}</p>
+                    <div class="impact-box">
+                        <h4>IMPACT</h4>
+                        <ul>
+                            ${c.impact.map(i => `<li>${i}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Conclusion
+            document.getElementById('conclusion-content').innerHTML = d.conclusion;
+
+            // Re-trigger scroll reveal
+            reveal();
+        }
+
+        // Scroll Reveal Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".case-card");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("reveal");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+
+        // Initial Load
+        setLang('en');
+    </script>
+</body>
+</html>
